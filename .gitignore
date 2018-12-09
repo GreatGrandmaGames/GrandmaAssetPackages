@@ -1,0 +1,10 @@
+*
+
+!Assets
+!Assets/**
+!GrandmaPackages
+!GrandmaPackages/**
+!ProjectSettings
+!ProjectSettings/**
+!.gitignore
+!README
