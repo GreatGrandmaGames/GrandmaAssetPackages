@@ -10,7 +10,6 @@ namespace Grandma.Core
         private IDGenerator idGen;
         private List<GrandmaObject> allObjects = new List<GrandmaObject>();
 
-
         #region Singleton
         public static GrandmaObjectManager Instance { get; private set; }
         private void Awake()

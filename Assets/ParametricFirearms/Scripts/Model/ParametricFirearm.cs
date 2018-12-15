@@ -25,7 +25,7 @@ namespace Grandma.ParametricFirearms
             Ready,
             Charging,
             CoolDown,
-            CoolDownInterupt,
+            //CoolDownInterupt,
             ManualReload
         }
 
@@ -55,12 +55,26 @@ namespace Grandma.ParametricFirearms
         private Coroutine coolDownCoroutine;
         #endregion
 
+        #region Events
+        [Header("Events")]
+        public PFEvent OnTriggerPressed;
+        public PFPercentageEvent OnCharge;
+        public PFEvent OnTriggerReleased;
+        public PFEvent OnChargeCancelled;
+        public PFEvent OnFire;
+        public PFPercentageEvent OnCoolDown;
+        public PFEvent OnManualReload;
+        public PFEvent OnCancelManualReload;
+        public PFEvent OnCoolDownComplete;
+        #endregion
+
         public override void Read(GrandmaComponentData data)
         {
             base.Read(data);
 
             pfData = data as PFData;
 
+            //Change me
             CurrentAmmo = pfData.RateOfFire.AmmoCapacity;
         }
 
@@ -68,42 +82,63 @@ namespace Grandma.ParametricFirearms
         /// <summary>
         /// When in Ready state, will begin charging the weapon. NB if chargeTime is 0, will immediately call fire
         /// </summary>
-        public Coroutine TriggerPress()
+        public void TriggerPress()
         {
             if (State == PFState.Ready)
             {
                 State = PFState.Charging;
                 chargeCoroutine = StartCoroutine(Charge());
 
-                return chargeCoroutine;
+                if(OnTriggerPressed != null)
+                {
+                    OnTriggerPressed.Invoke(this);
+                }
             }
-
-            return null;
         }
 
         /// <summary>
         /// If in Charging state, will either stop charging or fire depending on Data
         /// </summary>
-        public Coroutine TriggerRelease()
+        public void TriggerRelease()
         {
             if (State == PFState.Charging)
             {
                 //Interupt charging
                 StopCoroutine(chargeCoroutine);
 
+                if (OnTriggerReleased != null)
+                {
+                    OnTriggerReleased.Invoke(this);
+                }
+
                 if (pfData.ChargeTime.requireFullyCharged == false)
                 {
                     //Fire
-                    return Fire();
+                    Fire();
                 }
                 else
                 {
                     //Cancel
                     State = PFState.Ready;
+
+                    if (OnChargeCancelled != null)
+                    {
+                        OnChargeCancelled.Invoke(this);
+                    }
                 }
             }
+        }
 
-            return null;
+        public void ToggleManualReload()
+        {
+            if(State == PFState.ManualReload)
+            {
+                CancelManualReload();
+            }
+            else
+            {
+                ManualReload();
+            }
         }
 
         /// <summary>
@@ -118,7 +153,13 @@ namespace Grandma.ParametricFirearms
                     StopCoroutine(chargeCoroutine);
                 }
 
-                manaualReloadCoroutine = StartCoroutine(Reload());
+                State = PFState.ManualReload;
+                manaualReloadCoroutine = StartCoroutine(ManualReload_CO());
+
+                if (OnManualReload != null)
+                {
+                    OnManualReload.Invoke(this);
+                }
             }
         }
 
@@ -127,10 +168,19 @@ namespace Grandma.ParametricFirearms
         /// </summary>
         public void CancelManualReload()
         {
-            StopCoroutine(manaualReloadCoroutine);
-            State = PFState.Ready;
+            if(State == PFState.ManualReload)
+            {
+                StopCoroutine(manaualReloadCoroutine);
+                State = PFState.Ready;
+
+                if (OnManualReload != null)
+                {
+                    OnManualReload.Invoke(this);
+                }
+            }
         }
 
+        /*
         public void ResumeCoolDown()
         {
             if (State == PFState.CoolDownInterupt)
@@ -148,17 +198,19 @@ namespace Grandma.ParametricFirearms
                 StopCoroutine(coolDownCoroutine);
             }
         }
+        */
         #endregion
 
         #region Private Weapon Methods
         /// <summary>
         /// Launches projectile(s) and transistions into cool down
         /// </summary>    
-        private Coroutine Fire()
+        private void Fire()
         {
             if(projectilePrefab == null)
             {
                 Debug.LogWarning("ParametricFirearm: Unable to fire as projectile prefab is null");
+                return;
             }
 
             for (int i = 0; i < pfData.Multishot.numberOfShots; i++)
@@ -187,17 +239,32 @@ namespace Grandma.ParametricFirearms
                 }
             }
 
+            if (OnFire != null)
+            {
+                OnFire.Invoke(this);
+            }
+
+            State = PFState.CoolDown;
             coolDownCoroutine = StartCoroutine(CoolDown());
-
-            return coolDownCoroutine;
         }
-
 
         private IEnumerator Charge()
         {
-            //state is charge
-            yield return new WaitForSeconds(pfData.ChargeTime.chargeTime);
+            float timer = 0f;
 
+            while(timer < pfData.ChargeTime.chargeTime)
+            {
+                if(OnCharge != null)
+                {
+                    OnCharge.Invoke(this, timer);
+                }
+
+                timer += Time.deltaTime;
+
+                yield return null;
+            }
+
+            //state is charge
             Fire();
             //state is cool down
         }
@@ -209,8 +276,19 @@ namespace Grandma.ParametricFirearms
         /// <returns></returns>
         private IEnumerator CoolDown()
         {
-            State = PFState.CoolDown;
-            yield return new WaitForSeconds(pfData.RateOfFire.GetWaitTime(CurrentAmmo));
+            float timer = 0f;
+
+            while(timer < pfData.RateOfFire.GetWaitTime(CurrentAmmo))
+            {
+                if (OnCoolDown != null)
+                {
+                    OnCoolDown.Invoke(this, timer);
+                }
+
+                timer += Time.deltaTime;
+
+                yield return null;
+            }
 
             //If was a forced reload
             if (CurrentAmmo <= 0)
@@ -218,13 +296,16 @@ namespace Grandma.ParametricFirearms
                 CurrentAmmo = pfData.RateOfFire.AmmoCapacity;
             }
 
+            if(OnCoolDownComplete != null)
+            {
+                OnCoolDownComplete.Invoke(this);
+            }
+
             State = PFState.Ready;
         }
 
-
-        private IEnumerator Reload()
+        private IEnumerator ManualReload_CO()
         {
-            State = PFState.ManualReload;
             yield return new WaitForSeconds(pfData.RateOfFire.ReloadTime);
 
             //for now, we are assuming the Overwatch model of ammo - infinte with reloads

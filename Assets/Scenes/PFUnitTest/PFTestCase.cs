@@ -7,6 +7,7 @@ using Grandma.ParametricFirearms;
 
 public class PFTestCase : MonoBehaviour
 {
+    public PFData exampleData;
     public ParametricFirearm prefab;
 
     private ParametricFirearm testPF;
@@ -28,7 +29,9 @@ public class PFTestCase : MonoBehaviour
 
         testPF = Instantiate(prefab);
 
-        testPF.Read(new PFData(testPF.GrandmaObjectID)
+        testPF.Read(exampleData);
+            /*
+            new PFData(testPF.GrandmaObjectID)
         {
             Meta = new PFMetaData()
             {
@@ -69,38 +72,16 @@ public class PFTestCase : MonoBehaviour
                     maxInitialSpreadAngle = 1f
                 }
             }
-        });
-
-
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            testPF.TriggerPress();
         }
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            testPF.TriggerRelease();
-        }
+        );*/
 
-        if(testPF != null)
+        testPF.onStateChanged += (newState) => 
         {
-            Debug.Log(testPF.ToString());
-        }
-    }
+            Debug.Log(testPF);
+        };
 
-    private void Assert(bool test, string message)
-    {
-        if (test)
-        {
-            Debug.Log("GrandmaObjectUnitTest: Success " + message);
-        }
-        else
-        {
-            Debug.LogError("GrandmaObjectUnitTest: Failure " + message);
-        }
+        GetComponent<PlayerPFController>().inventory.Add(testPF);
+        GetComponent<PlayerPFController>().ScrollToNextWeapon();
     }
 }
 

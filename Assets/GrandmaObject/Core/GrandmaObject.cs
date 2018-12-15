@@ -20,19 +20,24 @@ namespace Grandma.Core
         #region Registration
         private void Awake()
         {
-            TryRegisterWithManager();
+            RegisterWithManager();
         }
 
-        private bool TryRegisterWithManager()
+        private bool RegisterWithManager()
         {
             if (GrandmaObjectManager.Instance == null)
             {
-                Debug.LogWarning("GrandmaObject: Attempting to create a GrandmaObject before the Manager is created, this is not allowed");             
+                //Debug.LogWarning("GrandmaObject: Attempting to create a GrandmaObject before the Manager is created, this is not allowed");             
+                GameObject grandmaManager = new GameObject();
+
+                grandmaManager.AddComponent<GrandmaObjectManager>();
+
+                grandmaManager.name = "GrandmaObjectManager";
+
+                //GrandmaObjectManager will set instance on Awake
             }
-            else
-            {
-                GrandmaObjectManager.Instance.Register(this);
-            }
+
+            GrandmaObjectManager.Instance.Register(this);
 
             return GrandmaObjectManager.Instance != null;
         }
@@ -64,10 +69,7 @@ namespace Grandma.Core
         {
             if (IsValid == false)
             {
-                if (TryRegisterWithManager() == false)
-                {
-                    return null;
-                }
+                RegisterWithManager();
             }
 
             var header = new GrandmaHeader();
@@ -91,10 +93,7 @@ namespace Grandma.Core
         {
             if(IsValid == false)
             {
-                if(TryRegisterWithManager() == false)
-                {
-                    return;
-                }
+                RegisterWithManager();
             }
 
             if(string.IsNullOrEmpty(jsonString))
