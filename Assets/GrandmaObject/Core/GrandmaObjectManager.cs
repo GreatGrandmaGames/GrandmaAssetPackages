@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,7 +39,7 @@ namespace Grandma.Core
             //Data Verification
             if (gObj.data == null)
             {
-                gObj.data = new GrandmaData();
+                gObj.data = new GrandmaObjectData();
             }
 
             gObj.data.id = idGen.RegisterID(gObj.data.id);
@@ -91,6 +92,25 @@ namespace Grandma.Core
         public GrandmaObject GetByID(string id)
         {
             return allObjects.SingleOrDefault(x => x.data.id == id);
+        }
+
+        public GrandmaComponent GetComponentByID(string id, Type componentType)
+        {
+            if (componentType.IsSubclassOf(typeof(GrandmaComponent)) == false)
+            {
+                //Not a grandmaable component
+                return null;
+            }
+
+            var obj = GetByID(id);
+
+            if(obj != null)
+            {
+                return obj.GetComponent(componentType) as GrandmaComponent;
+            } else
+            {
+                return null;
+            }
         }
         #endregion
     }

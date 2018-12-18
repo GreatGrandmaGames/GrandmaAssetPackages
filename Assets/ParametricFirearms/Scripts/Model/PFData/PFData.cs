@@ -9,10 +9,13 @@ namespace Grandma.ParametricFirearms
     /// All data that defines a PF
     /// </summary>
     [Serializable]
-    public class PFData : GrandmaComponentData
+    public class PFData : AgentItemData
     {
         [SerializeField]
         public PFMetaData Meta;
+        //[HideInInspector]
+        [SerializeField]
+        public PFDynamicData Dynamic;
         [SerializeField]
         public PFProjectileData Projectile;
         [SerializeField]
@@ -25,11 +28,23 @@ namespace Grandma.ParametricFirearms
         public PFData(string id) : base(id)
         {
             this.Meta = new PFMetaData();
+            this.Dynamic = new PFDynamicData();
             this.Projectile = new PFProjectileData(id);
             this.RateOfFire = new PFRateOfFireData();
             this.Multishot = new PFMultishotData();
             this.ChargeTime = new PFChargeTimeData();
         }
+    }
+
+    /// <summary>
+    /// Data for the PF that changes rapidly
+    /// </summary>
+    [Serializable]
+    public class PFDynamicData
+    {
+        public int CurrentAmmo = 0;
+        public float CoolDownTime = 0f;
+        public float ChargeUpTime = 0f;
     }
 
     /// <summary>

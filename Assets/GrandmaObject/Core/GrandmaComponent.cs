@@ -7,9 +7,18 @@ namespace Grandma.Core
     [Serializable]
     public class GrandmaComponentData
     {
-        public bool isValid = true;
+        [HideInInspector]
         public string associatedObjID;
+        [HideInInspector]
         public string dataClassName;
+
+        public bool IsValid
+        {
+            get
+            {
+                return string.IsNullOrEmpty(associatedObjID) == false && Type.GetType(dataClassName).IsSubclassOf(typeof(GrandmaComponentData));
+            }
+        }
 
         public GrandmaComponentData(string id)
         {
@@ -26,18 +35,43 @@ namespace Grandma.Core
     [RequireComponent(typeof(GrandmaObject))]
     public abstract class GrandmaComponent : MonoBehaviour
     {
-        [HideInInspector]
-        public GrandmaObject Base;
+        public GrandmaObject Base { get; private set; }
 
-        public GrandmaComponentData Data { get; private set; }
+        private GrandmaComponentData data;
+        public GrandmaComponentData Data
+        {
+            get
+            {
+                return data;
+            }
+            set
+            {
+                data = value;
 
-        public string GrandmaObjectID
+                if (OnDataRead != null)
+                {
+                    OnDataRead.Invoke(this);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Exposes Read event 
+        /// </summary>
+        public Action<GrandmaComponent> OnDataRead;
+        /// <summary>
+        /// Called when some data field has been updated
+        /// </summary>
+        public Action<GrandmaComponent> OnDataUpdated;
+
+        public string ObjectID
         {
             get
             {
                 return Base.data.id;
             }
         }
+
 
         protected virtual void Awake()
         {
@@ -49,11 +83,21 @@ namespace Grandma.Core
             }
         }
 
+        protected virtual void Start() { }
+
+        /// <summary>
+        /// Set component state from some provided data
+        /// </summary>
+        /// <param name="data"></param>
         public virtual void Read(GrandmaComponentData data)
         {
             this.Data = data;
         }
 
+        /// <summary>
+        /// Produce a JSON representation of this component
+        /// </summary>
+        /// <returns></returns>
         public string WriteToJSON()
         {
             if (ValidateState() == false)
@@ -62,12 +106,32 @@ namespace Grandma.Core
                 return null;
             }
 
+            //Give the component an opportunity to reach out and update any fields it needs to before write
+            PopulateDataFromInstance();
+
             return JsonUtility.ToJson(this.Data);
         }
 
+        protected void UpdatedData()
+        {
+            if(OnDataUpdated != null)
+            {
+                OnDataUpdated.Invoke(this);
+            }
+        }
+
+        /// <summary>
+        /// Gives the component a chance to repopulate variables before a Write
+        /// </summary>
+        protected virtual void PopulateDataFromInstance() { }
+
+        /// <summary>
+        /// Is this GrandmaComponent valid?
+        /// </summary>
+        /// <returns></returns>
         protected virtual bool ValidateState()
         {
-            return Data != null && Data.isValid;
+            return Data != null && Data.IsValid;
         }
     }
 }

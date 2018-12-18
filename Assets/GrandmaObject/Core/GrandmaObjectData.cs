@@ -5,10 +5,10 @@ using UnityEngine;
 namespace Grandma.Core
 {
     [Serializable]
-    public class GrandmaData
+    public class GrandmaObjectData
     {
-        public string id;
-        public string name;
+        public string id = "";
+        public string name = "";
 
         public bool IsValid()
         {

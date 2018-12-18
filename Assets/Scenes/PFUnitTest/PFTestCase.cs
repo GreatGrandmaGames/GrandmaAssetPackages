@@ -29,6 +29,8 @@ public class PFTestCase : MonoBehaviour
 
         testPF = Instantiate(prefab);
 
+        exampleData.associatedObjID = testPF.Base.data.id;
+
         testPF.Read(exampleData);
             /*
             new PFData(testPF.GrandmaObjectID)

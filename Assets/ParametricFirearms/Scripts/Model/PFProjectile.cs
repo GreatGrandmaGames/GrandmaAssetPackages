@@ -22,6 +22,9 @@ namespace Grandma.ParametricFirearms
 
         private PFProjectileData projData;
 
+        private Agent firingAgent;
+        private ParametricFirearm firingPF;
+
         protected override void Awake()
         {
             base.Awake();
@@ -32,8 +35,11 @@ namespace Grandma.ParametricFirearms
             Destroy(gameObject, 5f);
         }
 
-        public void Launch(PFProjectileData data)
+        public void Launch(Agent agent, ParametricFirearm pf, PFProjectileData data)
         {
+            this.firingAgent = agent;
+            this.firingPF = pf;
+
             this.Read(data);
 
             ApplyStartingTrajectory();
@@ -132,7 +138,7 @@ namespace Grandma.ParametricFirearms
                 return;
             }
 
-            damagable.Damage(CalculateDamageOnImpact());
+            damagable.Damage(new DamageablePayload(firingAgent.ObjectID, firingPF.ObjectID, ObjectID, CalculateDamageOnImpact()));
         }
 
         /// <summary>
@@ -160,7 +166,7 @@ namespace Grandma.ParametricFirearms
 
                 if (dam != null)
                 {
-                    dam.Damage(CalculateDamageOnExplosion(dam.transform.position));
+                    dam.Damage(new DamageablePayload(firingAgent.ObjectID, firingPF.ObjectID, ObjectID, CalculateDamageOnExplosion(dam.transform.position)));
                 }
             }
 

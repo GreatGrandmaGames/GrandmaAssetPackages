@@ -6,8 +6,9 @@ namespace Grandma.Core
 { 
     public class GrandmaObject : MonoBehaviour
     {
+        [HideInInspector]
         [SerializeField]
-        public GrandmaData data;
+        public GrandmaObjectData data;
 
         public bool IsValid
         {
@@ -23,11 +24,10 @@ namespace Grandma.Core
             RegisterWithManager();
         }
 
-        private bool RegisterWithManager()
+        private void RegisterWithManager()
         {
             if (GrandmaObjectManager.Instance == null)
             {
-                //Debug.LogWarning("GrandmaObject: Attempting to create a GrandmaObject before the Manager is created, this is not allowed");             
                 GameObject grandmaManager = new GameObject();
 
                 grandmaManager.AddComponent<GrandmaObjectManager>();
@@ -38,8 +38,6 @@ namespace Grandma.Core
             }
 
             GrandmaObjectManager.Instance.Register(this);
-
-            return GrandmaObjectManager.Instance != null;
         }
 
         private bool isQutting = false;
@@ -111,7 +109,7 @@ namespace Grandma.Core
             }
 
             var header = JsonUtility.FromJson<GrandmaHeader>(jsonComps[0]);
-            var grandmaData = JsonUtility.FromJson<GrandmaData>(jsonComps[1]);
+            var grandmaData = JsonUtility.FromJson<GrandmaObjectData>(jsonComps[1]);
 
             for(int i = 0; i < header.subData.Count; i++)//each(string s in header.subData ?? new List<string>())
             {
