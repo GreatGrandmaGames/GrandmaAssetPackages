@@ -32,8 +32,8 @@ public class GrandmaObjectUnitTest : MonoBehaviour {
             "GrandmaObject registered");
 
         //Setting IDs
-        var ps_withData_ID = previouslySpawned_WithData.data.id;
-        var ps_noData_ID = previouslySpawned_NoData.data.id;
+        var ps_withData_ID = previouslySpawned_WithData.Data.id;
+        var ps_noData_ID = previouslySpawned_NoData.Data.id;
 
         Assert(string.IsNullOrEmpty(ps_noData_ID) == false, " PS No Data ID is set to " + ps_noData_ID);
         Assert(string.IsNullOrEmpty(ps_withData_ID) == false, " PS With Data ID is set to " + ps_withData_ID);

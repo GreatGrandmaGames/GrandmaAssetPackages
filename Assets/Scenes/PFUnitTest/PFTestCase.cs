@@ -29,7 +29,7 @@ public class PFTestCase : MonoBehaviour
 
         testPF = Instantiate(prefab);
 
-        exampleData.associatedObjID = testPF.Base.data.id;
+        exampleData.associatedObjID = testPF.ObjectID;
 
         testPF.Read(exampleData);
             /*
@@ -77,7 +77,7 @@ public class PFTestCase : MonoBehaviour
         }
         );*/
 
-        testPF.onStateChanged += (newState) => 
+        testPF.OnStateChanged += (newState) => 
         {
             Debug.Log(testPF);
         };

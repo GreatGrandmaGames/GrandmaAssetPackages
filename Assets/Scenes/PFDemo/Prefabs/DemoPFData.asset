@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90ecf9c1a002a4b3c8b7d883d8fb4e18, type: 3}
+  m_Name: DemoPFData
+  m_EditorClassIdentifier: 
+  associatedObjID: 
+  dataClassName: 
+  agentID: 
+  Meta:
+    name: Rapid Peacekeeper
+  Dynamic:
+    CurrentAmmo: 0
+    CoolDownTime: 0
+    ChargeUpTime: 0
+  Projectile: {fileID: 11400000, guid: f784123a2c055a446b2c43fb7ec2701d, type: 2}
+  RateOfFire:
+    baseRate: 0.1
+    reloadingData:
+      count: 12
+      time: 1
+    burstData: []
+  Multishot:
+    numberOfShots: 2
+  ChargeTime:
+    chargeTime: 1
+    requireFullyCharged: 0

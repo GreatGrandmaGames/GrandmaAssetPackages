@@ -8,13 +8,13 @@ namespace Grandma.Core
     {
         [HideInInspector]
         [SerializeField]
-        public GrandmaObjectData data;
+        public GrandmaObjectData Data { get; private set; }
 
         public bool IsValid
         {
             get
             {
-                return data != null && data.IsValid();
+                return Data != null && Data.IsValid();
             }
         }
 
@@ -24,8 +24,14 @@ namespace Grandma.Core
             RegisterWithManager();
         }
 
-        private void RegisterWithManager()
+        public void RegisterWithManager()
         {
+            if(Data != null)
+            {
+                //already set data
+                return;
+            }
+
             if (GrandmaObjectManager.Instance == null)
             {
                 GameObject grandmaManager = new GameObject();
@@ -37,7 +43,7 @@ namespace Grandma.Core
                 //GrandmaObjectManager will set instance on Awake
             }
 
-            GrandmaObjectManager.Instance.Register(this);
+            Data = GrandmaObjectManager.Instance.Register(this);
         }
 
         private bool isQutting = false;
@@ -72,7 +78,7 @@ namespace Grandma.Core
 
             var header = new GrandmaHeader();
 
-            string fileString = JsonUtility.ToJson(this.data);
+            string fileString = JsonUtility.ToJson(this.Data);
 
             foreach(GrandmaComponent gableObj in GetComponents<GrandmaComponent>())
             {
@@ -116,7 +122,7 @@ namespace Grandma.Core
                 ComponentRead(jsonComps[i + 2], header.subData[i]);
             }
 
-            this.data = grandmaData;
+            this.Data = grandmaData;
         } 
         
         //Helper for Read

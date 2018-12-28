@@ -8,12 +8,12 @@ namespace Grandma.ParametricFirearms
     /// <summary>
     /// All data that defines a PF
     /// </summary>
-    [Serializable]
+    [CreateAssetMenu(menuName = "ParametricFirearms/Firearm Data")]
     public class PFData : AgentItemData
     {
         [SerializeField]
         public PFMetaData Meta;
-        //[HideInInspector]
+        [HideInInspector]
         [SerializeField]
         public PFDynamicData Dynamic;
         [SerializeField]
@@ -25,11 +25,14 @@ namespace Grandma.ParametricFirearms
         [SerializeField]
         public PFChargeTimeData ChargeTime;
 
-        public PFData(string id) : base(id)
+        void Awake()
         {
             this.Meta = new PFMetaData();
             this.Dynamic = new PFDynamicData();
-            this.Projectile = new PFProjectileData(id);
+            if(this.Projectile == null)
+            {
+                this.Projectile = CreateInstance<PFProjectileData>();
+            }
             this.RateOfFire = new PFRateOfFireData();
             this.Multishot = new PFMultishotData();
             this.ChargeTime = new PFChargeTimeData();
@@ -45,27 +48,6 @@ namespace Grandma.ParametricFirearms
         public int CurrentAmmo = 0;
         public float CoolDownTime = 0f;
         public float ChargeUpTime = 0f;
-    }
-
-    /// <summary>
-    /// All data that defines a projectile, as fired by a PF
-    /// </summary>
-    [Serializable]
-    public class PFProjectileData : GrandmaComponentData
-    {
-        [SerializeField]
-        public PFImpactDamageData ImpactDamage;
-        [SerializeField]
-        public PFAreaDamageData AreaDamage;
-        [SerializeField]
-        public PFTrajectoryData Trajectory;
-
-        public PFProjectileData(string id) : base(id)
-        {
-            this.ImpactDamage = new PFImpactDamageData();
-            this.AreaDamage = new PFAreaDamageData();
-            this.Trajectory = new PFTrajectoryData();
-        }
     }
 
     /// <summary>

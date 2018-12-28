@@ -1,16 +1,11 @@
-﻿using System;
+﻿using UnityEngine;
 
 namespace Grandma.Core
 {
-    [Serializable]
+    [CreateAssetMenu(menuName = "ParametricFirearms/Faction Data")]
     public class FactionData : GrandmaComponentData
     {
         //all agents
-
-        public FactionData(string id) : base(id)
-        {
-
-        }
     }
 
     public class Faction : GrandmaComponent

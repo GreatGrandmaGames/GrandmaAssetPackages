@@ -45,9 +45,9 @@ namespace Grandma.ParametricFirearms
             ApplyStartingTrajectory();
         }
 
-        public override void Read(GrandmaComponentData data)
+        protected override void OnRead(GrandmaComponentData data)
         {
-            base.Read(data);
+            base.OnRead(data);
 
             projData = data as PFProjectileData;
         }
@@ -138,7 +138,7 @@ namespace Grandma.ParametricFirearms
                 return;
             }
 
-            damagable.Damage(new DamageablePayload(firingAgent.ObjectID, firingPF.ObjectID, ObjectID, CalculateDamageOnImpact()));
+            damagable.Damage(new DamageablePayload(firingAgent.ObjectID, firingPF.ObjectID, CalculateDamageOnImpact()));
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Grandma.ParametricFirearms
 
                 if (dam != null)
                 {
-                    dam.Damage(new DamageablePayload(firingAgent.ObjectID, firingPF.ObjectID, ObjectID, CalculateDamageOnExplosion(dam.transform.position)));
+                    dam.Damage(new DamageablePayload(firingAgent.ObjectID, firingPF.ObjectID, CalculateDamageOnExplosion(dam.transform.position)));
                 }
             }
 

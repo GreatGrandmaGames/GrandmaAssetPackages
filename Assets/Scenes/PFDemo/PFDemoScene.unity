@@ -239,7 +239,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &426378974
 GameObject:
@@ -559,162 +559,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &832972943
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 832972946}
-  - component: {fileID: 832972945}
-  - component: {fileID: 832972944}
-  - component: {fileID: 832972947}
-  m_Layer: 0
-  m_Name: PF
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &832972944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 832972943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d92ce256acfe40e2a86d593dc9686c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingAgent: {fileID: 1695471499}
-  projectilePrefab: {fileID: 114591416167718344, guid: 25e6e916ca04f7c4cbc5d5934849535a,
-    type: 2}
-  barrelTip: {fileID: 1031886422}
-  startingData:
-    associatedObjID: 
-    dataClassName: 
-    agentID: 
-    Meta:
-      name: Red Revolver
-    Dynamic:
-      CurrentAmmo: 0
-      CoolDownTime: 0
-      ChargeUpTime: 0
-    Projectile:
-      associatedObjID: 
-      dataClassName: 
-      ImpactDamage:
-        baseDamage: 10
-        damageChangeByDistance: 10
-      AreaDamage:
-        explodable: 1
-        maxDamage: 10
-        maxBlastRange: 10
-        numImpactsToDetonate: 1
-      Trajectory:
-        initialForceVector: 10
-        maxInitialSpreadAngle: 0.01
-        dropOffRatio: 0.01
-    RateOfFire:
-      baseRate: 0.1
-      reloadingData:
-        count: 10
-        time: 1
-      burstData: []
-    Multishot:
-      numberOfShots: 1
-    ChargeTime:
-      chargeTime: 1
-      requireFullyCharged: 0
-  OnTriggerPressed:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Grandma.ParametricFirearms.PFEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnCharge:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Grandma.ParametricFirearms.PFPercentageEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnTriggerReleased:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Grandma.ParametricFirearms.PFEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnChargeCancelled:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Grandma.ParametricFirearms.PFEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnFire:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Grandma.ParametricFirearms.PFEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnCoolDown:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Grandma.ParametricFirearms.PFPercentageEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnManualReload:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Grandma.ParametricFirearms.PFEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnCancelManualReload:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Grandma.ParametricFirearms.PFEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnCoolDownComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Grandma.ParametricFirearms.PFEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &832972945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 832972943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5457fee3cb244f648af9f3dd19af91c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data:
-    id: 
-    name: 
---- !u!4 &832972946
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 832972943}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1031886422}
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &832972947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 832972943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe4c4d7a4e0006643b42ef50898e7727, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chargeUp: {fileID: 1092970910}
-  coolDown: {fileID: 1831441180}
-  ammo: {fileID: 1570559422}
 --- !u!1 &1003175755
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,34 +628,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1003175755}
   m_CullTransparentMesh: 0
---- !u!1 &1031886421
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1031886422}
-  m_Layer: 0
-  m_Name: Barrel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1031886422
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1031886421}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 832972946}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1092970908
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,6 +747,74 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1334903841 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114990327094861162, guid: 9df96bf060a57094da25f581ae6a2281,
+    type: 2}
+  m_PrefabInternal: {fileID: 1543414460}
+  m_Script: {fileID: 11500000, guid: 4d92ce256acfe40e2a86d593dc9686c3, type: 3}
+--- !u!1001 &1543414460
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4437943373549744, guid: 9df96bf060a57094da25f581ae6a2281, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.23363422
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437943373549744, guid: 9df96bf060a57094da25f581ae6a2281, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437943373549744, guid: 9df96bf060a57094da25f581ae6a2281, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 1.3729203
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437943373549744, guid: 9df96bf060a57094da25f581ae6a2281, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437943373549744, guid: 9df96bf060a57094da25f581ae6a2281, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0.7252608
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437943373549744, guid: 9df96bf060a57094da25f581ae6a2281, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437943373549744, guid: 9df96bf060a57094da25f581ae6a2281, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.68847424
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437943373549744, guid: 9df96bf060a57094da25f581ae6a2281, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114502289960885012, guid: 9df96bf060a57094da25f581ae6a2281,
+        type: 2}
+      propertyPath: chargeUp
+      value: 
+      objectReference: {fileID: 1092970910}
+    - target: {fileID: 114502289960885012, guid: 9df96bf060a57094da25f581ae6a2281,
+        type: 2}
+      propertyPath: coolDown
+      value: 
+      objectReference: {fileID: 1831441180}
+    - target: {fileID: 114502289960885012, guid: 9df96bf060a57094da25f581ae6a2281,
+        type: 2}
+      propertyPath: ammo
+      value: 
+      objectReference: {fileID: 1570559422}
+    - target: {fileID: 114990327094861162, guid: 9df96bf060a57094da25f581ae6a2281,
+        type: 2}
+      propertyPath: duplicateData
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9df96bf060a57094da25f581ae6a2281, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &1570559420
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,6 +1003,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b2dd5c11d6b4d4d9e23f3c8fc855b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  duplicateData: 1
+  Data: {fileID: 0}
 --- !u!114 &1695471497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1130,11 +1016,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f65755d679f67040bf697986e1d1ab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingData:
-    associatedObjID: 
-    dataClassName: 
-    maxHealth: 0
-    currentHealth: 0
+  duplicateData: 1
+  Data: {fileID: 0}
 --- !u!114 &1695471498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1146,9 +1029,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5457fee3cb244f648af9f3dd19af91c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
-    id: 
-    name: 
 --- !u!114 &1695471499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1160,6 +1040,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd52501cbc33f041b479a16aec36734, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  duplicateData: 1
+  Data: {fileID: 0}
   startingFaction: {fileID: 0}
 --- !u!114 &1695471500
 MonoBehaviour:
@@ -1175,7 +1057,7 @@ MonoBehaviour:
   scrollWeaponsKey: 102
   reload: 114
   inventory:
-  - {fileID: 832972944}
+  - {fileID: 1334903841}
 --- !u!1 &1742125770
 GameObject:
   m_ObjectHideFlags: 0
@@ -1419,7 +1301,7 @@ RectTransform:
   - {fileID: 1092970909}
   - {fileID: 1570559421}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

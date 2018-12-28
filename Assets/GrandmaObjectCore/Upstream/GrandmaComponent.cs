@@ -4,74 +4,27 @@ using UnityEngine;
 
 namespace Grandma.Core
 {
-    [Serializable]
-    public class GrandmaComponentData
-    {
-        [HideInInspector]
-        public string associatedObjID;
-        [HideInInspector]
-        public string dataClassName;
-
-        public bool IsValid
-        {
-            get
-            {
-                return string.IsNullOrEmpty(associatedObjID) == false && Type.GetType(dataClassName).IsSubclassOf(typeof(GrandmaComponentData));
-            }
-        }
-
-        public GrandmaComponentData(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-            {
-                throw new ArgumentException("ID Cannot Be Null or Empty");
-            }
-
-            this.associatedObjID = id;
-            this.dataClassName = this.GetType().ToString();
-        }
-    }
-
     [RequireComponent(typeof(GrandmaObject))]
     public abstract class GrandmaComponent : MonoBehaviour
     {
         public GrandmaObject Base { get; private set; }
 
-        private GrandmaComponentData data;
-        public GrandmaComponentData Data
-        {
-            get
-            {
-                return data;
-            }
-            set
-            {
-                data = value;
+        [Tooltip("Should this component use the canonical Scriptable Object or create an instance for its own use?")]
+        public bool duplicateData = true;
+        public GrandmaComponentData Data;
 
-                if (OnDataRead != null)
-                {
-                    OnDataRead.Invoke(this);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Exposes Read event 
-        /// </summary>
-        public Action<GrandmaComponent> OnDataRead;
         /// <summary>
         /// Called when some data field has been updated
         /// </summary>
-        public Action<GrandmaComponent> OnDataUpdated;
+        public Action<GrandmaComponent> OnUpdated;
 
         public string ObjectID
         {
             get
             {
-                return Base.data.id;
+                return Base.Data.id;
             }
         }
-
 
         protected virtual void Awake()
         {
@@ -81,6 +34,31 @@ namespace Grandma.Core
             {
                 Base = gameObject.AddComponent<GrandmaObject>();
             }
+
+            if(Base.Data == null)
+            {
+                Base.RegisterWithManager();
+            }
+
+            if (Data != null)
+            {
+                /*
+                 * Issue: Does not deep copy
+                 * 
+                 * TODO: find solution to deep copying scriptableobjects
+                if (duplicateData)
+                {
+                    Data = Instantiate(Data);
+                }
+                */
+
+                OnRead(Data);
+
+                if (OnUpdated != null)
+                {
+                    OnUpdated(this);
+                }
+            }
         }
 
         protected virtual void Start() { }
@@ -89,11 +67,21 @@ namespace Grandma.Core
         /// Set component state from some provided data
         /// </summary>
         /// <param name="data"></param>
-        public virtual void Read(GrandmaComponentData data)
+        public void Read(GrandmaComponentData data)
         {
             this.Data = data;
+
+            OnRead(data);
+
+            if(OnUpdated != null)
+            {
+                OnUpdated(this);
+            }
         }
 
+        protected virtual void OnRead(GrandmaComponentData data) { }
+
+        #region Write
         /// <summary>
         /// Produce a JSON representation of this component
         /// </summary>
@@ -107,23 +95,32 @@ namespace Grandma.Core
             }
 
             //Give the component an opportunity to reach out and update any fields it needs to before write
-            PopulateDataFromInstance();
+            OnWrite();
 
             return JsonUtility.ToJson(this.Data);
         }
 
-        protected void UpdatedData()
+        //Helper - alert that data has changed
+        protected virtual void Write()
         {
-            if(OnDataUpdated != null)
+            if (ValidateState() == false)
             {
-                OnDataUpdated.Invoke(this);
+                Debug.LogWarning("GrandmaComponent: Cannot Write as Data is invalid");
+                return;
             }
+
+            Data.associatedObjID = Base.Data.id;
+            //Send to network 
+
+            //Update based on new Data
+            Read(Data);
         }
 
         /// <summary>
         /// Gives the component a chance to repopulate variables before a Write
         /// </summary>
-        protected virtual void PopulateDataFromInstance() { }
+        protected virtual void OnWrite() { }
+        #endregion
 
         /// <summary>
         /// Is this GrandmaComponent valid?

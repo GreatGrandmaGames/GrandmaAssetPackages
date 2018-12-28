@@ -60,7 +60,6 @@ namespace Grandma.ParametricFirearms
         /// <returns></returns>
         public float GetWaitTime(int ammoRemaining)
         {
-
             var burstAndReload = new List<PFBurstData>();
             burstAndReload.AddRange(burstData ?? new List<PFBurstData>());
             burstAndReload.Add(reloadingData);

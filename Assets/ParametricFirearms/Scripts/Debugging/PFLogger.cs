@@ -15,12 +15,12 @@ public class PFLogger : MonoBehaviour {
     {
         var pf = GetComponent<ParametricFirearm>();
         
-        pf.onStateChanged += (state) =>
+        pf.OnStateChanged += (state) =>
         {
             Debug.Log(pf);
         };
 
-        pf.OnDataUpdated += (pfComp) =>
+        pf.OnUpdated += (pfComp) =>
         {
             if(pfComp == null || pfComp as ParametricFirearm == null || (pfComp as ParametricFirearm).Data as PFData == null)
             {

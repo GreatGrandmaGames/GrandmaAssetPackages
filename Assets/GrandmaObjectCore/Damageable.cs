@@ -3,35 +3,26 @@ using System;
 
 namespace Grandma.Core
 {
-    [Serializable]
+    [CreateAssetMenu(menuName = "Core/Damageable Data")]
     public class DamageableData : GrandmaComponentData
     {
         public float maxHealth;
         public float currentHealth;
-
-        public DamageableData(string id, float maxHealth) : base(id)
-        {
-            this.maxHealth = maxHealth;
-            this.currentHealth = maxHealth;
-        }
     }
 
     [Serializable]
     public struct DamageablePayload
     {
-        //The modifying object - eg projectile
+        //The optional modifying object - eg projectile
         public string sourceID;
-        //The weapon that fired the damage source
-        public string weaponID;
-        //The agent that used the weapon
+        //The optional agent that used the weapon
         public string agentID;
 
         public float amount;
 
-        public DamageablePayload(string agentID, string weaponID, string sourceID, float amount)
+        public DamageablePayload(string agentID, string sourceID, float amount)
         {
             this.sourceID = sourceID;
-            this.weaponID = weaponID;
             this.agentID = agentID;
             this.amount = amount;
         }
@@ -42,18 +33,9 @@ namespace Grandma.Core
         [NonSerialized]
         private DamageableData damageData;
 
-        public DamageableData startingData;
-
-        protected override void Awake()
+        protected override void OnRead(GrandmaComponentData data)
         {
-            base.Awake();
-
-            Read(startingData);
-        }
-
-        public override void Read(GrandmaComponentData data)
-        {
-            base.Read(data);
+            base.OnRead(data);
 
             this.damageData = data as DamageableData;
         }
@@ -68,7 +50,7 @@ namespace Grandma.Core
 
             this.damageData.currentHealth -= payload.amount;
 
-            UpdatedData();
+            Write();
         }
 
         public void Heal(DamageablePayload payload)
@@ -81,7 +63,7 @@ namespace Grandma.Core
 
             this.damageData.currentHealth += payload.amount;
 
-            UpdatedData();
+            Write();
         }
 
         protected override bool ValidateState()

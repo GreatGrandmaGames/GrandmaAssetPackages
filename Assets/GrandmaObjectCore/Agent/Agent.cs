@@ -4,15 +4,11 @@ using UnityEngine;
 
 namespace Grandma.Core
 {
-    [Serializable]
+    [CreateAssetMenu(menuName = "ParametricFirearms/Agent Data")]
     public class AgentData : GrandmaComponentData
     {
         public string factionID;
 
-        public AgentData(string id, string factionID) : base(id)
-        {
-            this.factionID = factionID;
-        }
     }
 
     public class Agent : GrandmaComponent
@@ -30,19 +26,9 @@ namespace Grandma.Core
             Items = new List<AgentItem>();
         }
 
-        protected override void Start()
+        protected override void OnRead(GrandmaComponentData data)
         {
-            base.Start();
-
-            if(startingFaction != null)
-            {
-                Read(new AgentData(ObjectID, startingFaction.ObjectID));
-            }
-        }
-
-        public override void Read(GrandmaComponentData data)
-        {
-            base.Read(data);
+            base.OnRead(data);
 
             var agentData = Data as AgentData;
 
@@ -50,6 +36,13 @@ namespace Grandma.Core
             {
                 Faction = GrandmaObjectManager.Instance.GetComponentByID(agentData.factionID, typeof(Faction)) as Faction;
             }
+        }
+
+        public void SetFaction(string factionID)
+        {
+            (Data as AgentData).factionID = factionID;
+
+            Write();
         }
     }
 }

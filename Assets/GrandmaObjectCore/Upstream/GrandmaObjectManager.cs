@@ -28,34 +28,17 @@ namespace Grandma.Core
         #endregion
 
         #region Registration
-        public void Register(GrandmaObject gObj)
+        public GrandmaObjectData Register(GrandmaObject gObj)
         {
             if (gObj == null)
             {
                 Debug.LogError("GrandmaObjectManager -> Register(): Provided object is null");
-                return;
+                return null;
             }
-
-            //Data Verification
-            if (gObj.data == null)
-            {
-                gObj.data = new GrandmaObjectData();
-            }
-
-            gObj.data.id = idGen.RegisterID(gObj.data.id);
-
-            //Default for name - Gameobjet's name
-            if (string.IsNullOrEmpty(gObj.data.name))
-            {
-                gObj.data.name = gObj.name;
-            }
-            else
-            {
-                gObj.name = gObj.data.name;
-            }
-            //end Data Verification
 
             allObjects.Add(gObj);
+
+            return new GrandmaObjectData(idGen.NewID(), gObj.name);
         }
 
         public void Unregister(GrandmaObject gObj)
@@ -91,7 +74,7 @@ namespace Grandma.Core
 
         public GrandmaObject GetByID(string id)
         {
-            return allObjects.SingleOrDefault(x => x.data.id == id);
+            return allObjects.SingleOrDefault(x => x.Data.id == id);
         }
 
         public GrandmaComponent GetComponentByID(string id, Type componentType)

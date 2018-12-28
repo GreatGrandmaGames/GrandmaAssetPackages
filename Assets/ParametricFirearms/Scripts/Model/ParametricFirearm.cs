@@ -12,8 +12,6 @@ namespace Grandma.ParametricFirearms
         [Tooltip("Where the projectile will spawn from and its initial direction (z-axis)")]
         public Transform barrelTip;
 
-        public PFData startingData;
-
         //Data Properties
         [NonSerialized]
         private PFData pfData;
@@ -25,11 +23,11 @@ namespace Grandma.ParametricFirearms
             {
                 return pfData.Dynamic.CurrentAmmo;
             }
-            set
+            private set
             {
                 pfData.Dynamic.CurrentAmmo = value;
 
-                UpdatedData();
+                Write();
             }
         }
 
@@ -39,11 +37,11 @@ namespace Grandma.ParametricFirearms
             {
                 return pfData.Dynamic.CoolDownTime;
             }
-            set
+            private set
             {
                 pfData.Dynamic.CoolDownTime = Mathf.Max(value, 0f);
 
-                UpdatedData();
+                Write();
             }
         }
 
@@ -53,11 +51,11 @@ namespace Grandma.ParametricFirearms
             {
                 return pfData.Dynamic.ChargeUpTime;
             }
-            set
+            private set
             {
                 pfData.Dynamic.ChargeUpTime = Mathf.Min(value, pfData.ChargeTime.chargeTime);
 
-                UpdatedData();
+                Write();
             }
         }
 
@@ -83,14 +81,14 @@ namespace Grandma.ParametricFirearms
             {
                 state = value;
 
-                if (onStateChanged != null)
+                if (OnStateChanged != null)
                 {
-                    onStateChanged(value);
+                    OnStateChanged(value);
                 }
             }
         }
 
-        public Action<PFState> onStateChanged;
+        public Action<PFState> OnStateChanged;
 
         private Coroutine chargeCoroutine;
         private Coroutine manaualReloadCoroutine;
@@ -110,18 +108,9 @@ namespace Grandma.ParametricFirearms
         public PFEvent OnCoolDownComplete;
         #endregion
 
-        protected override void Start()
+        protected override void OnRead(GrandmaComponentData data)
         {
-            base.Start();
-
-            startingData.associatedObjID = ObjectID;
-            startingData.agentID = startingAgent.ObjectID;
-            Read(startingData);
-        }
-
-        public override void Read(GrandmaComponentData data)
-        {
-            base.Read(data);
+            base.OnRead(data);
 
             bool isNew = pfData == null;
 
@@ -281,8 +270,7 @@ namespace Grandma.ParametricFirearms
                 }
 
                 //Clone projectile data
-                var projData = JsonUtility.FromJson<PFProjectileData>(JsonUtility.ToJson(pfData.Projectile));
-                projectile.Launch(this.Agent, this, projData);
+                projectile.Launch(this.Agent, this, Instantiate(pfData.Projectile));
 
                 //Controlling ROF
                 //CUrrent ammo is decremented before being sent to GetWaitTime to avoid the off by one error
@@ -376,6 +364,7 @@ namespace Grandma.ParametricFirearms
 
         public override string ToString()
         {
+
             return string.Format("PF named {0} is in state: {1}, has current ammo {2}", pfData.Meta.name, State.ToString(), CurrentAmmo);
         }
     }

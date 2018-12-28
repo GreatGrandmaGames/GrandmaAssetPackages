@@ -3,16 +3,10 @@ using UnityEngine;
 
 namespace Grandma.Core
 {
-    [Serializable]
     public class AgentItemData : GrandmaComponentData
     {
         [HideInInspector]
         public string agentID;
-
-        public AgentItemData(string id, string agentID = "") : base(id)
-        {
-            this.agentID = agentID;
-        }
     }
 
     /// <summary>
@@ -27,7 +21,7 @@ namespace Grandma.Core
             {
                 return agent;
             }
-            set
+            protected set
             {
                 if(agent != null && agent.Items.Contains(this))
                 {
@@ -43,21 +37,9 @@ namespace Grandma.Core
             }
         }
 
-        public Agent startingAgent;
-
-        protected override void Start()
+        protected override void OnRead(GrandmaComponentData data)
         {
-            base.Start();
-
-            if (startingAgent != null)
-            {
-                Read(new AgentItemData(ObjectID, startingAgent.ObjectID));
-            } 
-        }
-
-        public override void Read(GrandmaComponentData data)
-        {
-            base.Read(data);
+            base.OnRead(data);
 
             var agentItemData = Data as AgentItemData;
 
@@ -65,6 +47,13 @@ namespace Grandma.Core
             {
                 Agent = GrandmaObjectManager.Instance.GetComponentByID(agentItemData.agentID, typeof(Agent)) as Agent;
             }
+        }
+
+        public void SetAgent(string agentID)
+        {
+            (Data as AgentItemData).agentID = agentID;
+
+            Write();
         }
     }
 }

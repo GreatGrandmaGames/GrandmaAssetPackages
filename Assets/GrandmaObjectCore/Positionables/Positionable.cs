@@ -4,16 +4,12 @@ using UnityEngine;
 
 namespace Grandma.Core
 {
+    [CreateAssetMenu]
     public class PositionableData : GrandmaComponentData
     {
         public Vector3 position = Vector3.zero;
         public Vector3 rotation = Vector3.zero;
         public Vector3 localScale = Vector3.one;
-
-        public PositionableData(string id, Transform transform) : base(id)
-        {
-            SetFromTransform(transform);
-        }
 
         public void SetFromTransform(Transform transform)
         {
@@ -28,16 +24,9 @@ namespace Grandma.Core
         [NonSerialized]
         private PositionableData posData;
 
-        protected override void Start()
+        protected override void OnRead(GrandmaComponentData data)
         {
-            base.Start();
-
-            Read(new PositionableData(ObjectID, transform));
-        }
-
-        public override void Read(GrandmaComponentData data)
-        {
-            base.Read(data);
+            base.OnRead(data);
 
             posData = data as PositionableData;
 
@@ -49,9 +38,9 @@ namespace Grandma.Core
             }
         }
 
-        protected override void PopulateDataFromInstance()
+        protected override void OnWrite()
         {
-            base.PopulateDataFromInstance();
+            base.OnWrite();
 
             posData.SetFromTransform(transform);
         }
