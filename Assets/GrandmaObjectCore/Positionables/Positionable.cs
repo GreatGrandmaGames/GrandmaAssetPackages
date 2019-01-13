@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Grandma.Core
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "Core/Positionable")]
     public class PositionableData : GrandmaComponentData
     {
         public Vector3 position = Vector3.zero;
@@ -23,7 +23,6 @@ namespace Grandma.Core
     {
         [NonSerialized]
         private PositionableData posData;
-
         protected override void OnRead(GrandmaComponentData data)
         {
             base.OnRead(data);
