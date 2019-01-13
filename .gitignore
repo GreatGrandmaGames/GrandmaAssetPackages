@@ -6,6 +6,6 @@
 !GrandmaPackages/**
 !ProjectSettings
 !ProjectSettings/**
-!.gitattribute
+!.gitattributes
 !.gitignore
 !README
