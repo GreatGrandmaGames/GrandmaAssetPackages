@@ -4,79 +4,52 @@ using UnityEngine;
 
 namespace Grandma.Core
 {
-    [RequireComponent(typeof(GroundMovement))]
-    [RequireComponent(typeof(ZeroGMovement))]
-    public class MoveController: GrandmaComponent
+    //This class essentially instantiates all of the different movement modes we want
+    //and, when called, switches between them
+    public class MoveController: MonoBehaviour
     {
         public Moveable active;
 
-        private Moveable inactive;
-        protected override void Awake()
-        {
-            base.Awake();
-            active = GetComponent<GroundMovement>();
-            inactive = GetComponent<ZeroGMovement>();
-        }
+        private List<Moveable> allModes;
 
         public void SwitchMode(Moveable switchTo)
         {
-            active.Deactivate();
-            Moveable temp = active;
-            active = inactive;
-            inactive = temp;
-            active.Activate();
+            if (active != null)
+            {
+                active.Deactivate();
+            }
+            active = allModes.Find(x => x == switchTo);
+            if (active == null)
+            {
+                AddMode(switchTo);
+                active = switchTo;
+            }
+            if (active != null)
+            {
+                active.Activate();
+            }
+            else
+            {
+                //just for now
+                throw new System.Exception("MoveController : SwitchMode - Active should never be null.");
+            }
         }
-    }
-    //this would all have to be in another file ?
-    [RequireComponent(typeof(MoveController))]
-    public class InputController: GrandmaComponent
-    {
-        private MoveController mc;
-        private Vector3 velocity;
-        protected override void Awake()
-        {
-            base.Awake();
-            mc = GetComponent<MoveController>();
-        }
+
         private void FixedUpdate()
-        { 
-           
-            mc.active.Move(velocity);
+        {
+            if (active != null)
+            {
+                active.Move();
+            }
+        }
+        public void AddMode(Moveable addMe)
+        {
+            allModes.Add(addMe);
         }
 
-        private Vector3 ZeroGVelocity()
+        public void AddModes(List<Moveable> addMeList)
         {
-            float x = Input.GetAxisRaw("Horizontal");
-            float z = Input.GetAxisRaw("Vertical");
-            //regular x movement
-            Vector3 moveHorizontal = transform.right * x;
-
-            //move in the direction you're facing
-            Vector3 moveVertical = Camera.main.transform.forward * z;
-
-            //move vertically using the jump button (pharah-esque ??)
-            Vector3 moveUp = transform.up * (Input.GetButton("Jump") ? 1 : 0);
-
-            //TODO create a data field for movement to include scalar value 
-            //(originally called "thrust")
-            float scalar = 1.0f;
-            //calculate velocity
-            Vector3 newVelocity = (moveHorizontal + moveVertical + moveUp).normalized * scalar;
-            return newVelocity;
-        }
-
-        private Vector3 GroundMovementVelocity()
-        {
-            float x = Input.GetAxisRaw("Horizontal");
-            float z = Input.GetAxisRaw("Vertical");
-            Vector3 moveHorizontal = transform.right * x;
-            Vector3 moveVertical = transform.forward * z;
-            //TODO create a data field for movement to include scalar value
-            float scalar = 1.0f;
-
-            //calculate velocity
-            Vector3 newVelocity = (moveHorizontal + moveVertical).normalized * scalar;
-            return newVelocity;
+            allModes.AddRange(addMeList);
         }
     }
 }
