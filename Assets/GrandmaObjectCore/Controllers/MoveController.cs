@@ -10,7 +10,7 @@ namespace Grandma.Core
     {
         public Moveable active;
 
-        private List<Moveable> allModes;
+        private List<Moveable> allModes = new List<Moveable>();
 
         public void SwitchMode(Moveable switchTo)
         {

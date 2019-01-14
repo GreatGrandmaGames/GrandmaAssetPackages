@@ -23,11 +23,22 @@ namespace Grandma.Core
             groundMovement = GetComponent<GroundMovement>();
             zeroGMovement = GetComponent<ZeroGMovement>();
 
+            if (groundMovement == null)
+            {
+                Debug.Log("GROUND MOVEMENT NULL");
+            }
             //setup the move controller properly
-            mc.AddMode(groundMovement);
-            mc.AddMode(zeroGMovement);
+            if (groundMovement != null && zeroGMovement != null)
+            {
+                mc.AddMode(groundMovement);
+                mc.AddMode(zeroGMovement);
 
-            mc.SwitchMode(groundMovement);
+                mc.SwitchMode(groundMovement);
+            }
+            else
+            {
+                throw new System.Exception("FPSInputController: Awake - Components Null");
+            }
 
         }
         private void FixedUpdate()

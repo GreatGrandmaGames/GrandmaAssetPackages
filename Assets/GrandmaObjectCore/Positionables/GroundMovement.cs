@@ -27,7 +27,6 @@ namespace Grandma.Core
         {
             Vector3 moveHorizontal = transform.right * InputVector.x;
             Vector3 moveVertical = transform.forward * InputVector.z;
-            //TODO create a data field for movement to include scalar value
 
             //calculate velocity
             Vector3 newVelocity = (moveHorizontal + moveVertical).normalized * groundMovementData.speedScalar;
@@ -41,6 +40,8 @@ namespace Grandma.Core
                 rb.AddForce(new Vector3(0f, groundMovementData.jumpForce, 0f), ForceMode.Impulse);
             }
             rb.AddForce(velocity, ForceMode.VelocityChange);
+            //rb.MovePosition(rb.position + velocity * Time.unscaledDeltaTime);
+
         }
 
         protected override Vector3 InputVectorCalculation()
