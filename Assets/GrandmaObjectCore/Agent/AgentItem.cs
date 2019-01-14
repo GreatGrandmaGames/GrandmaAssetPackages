@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Grandma.Core
 {
+    [Serializable]
     public class AgentItemData : GrandmaComponentData
     {
         [HideInInspector]

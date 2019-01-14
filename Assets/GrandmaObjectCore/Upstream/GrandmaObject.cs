@@ -114,8 +114,8 @@ namespace Grandma.Core
                 return;
             }
 
-            var header = JsonUtility.FromJson<GrandmaHeader>(jsonComps[0]);
-            var grandmaData = JsonUtility.FromJson<GrandmaObjectData>(jsonComps[1]);
+            var header = JsonUtility.FromJson(jsonComps[0], typeof(GrandmaHeader)) as GrandmaHeader;
+            var grandmaData = JsonUtility.FromJson(jsonComps[1], typeof(GrandmaObjectData)) as GrandmaObjectData;
 
             for(int i = 0; i < header.subData.Count; i++)//each(string s in header.subData ?? new List<string>())
             {
@@ -129,7 +129,7 @@ namespace Grandma.Core
         private void ComponentRead(string json, string typeString)
         {
             //Extract data from string
-            var tempData = JsonUtility.FromJson<GrandmaComponentData>(json);
+            var tempData = JsonUtility.FromJson(json, typeof(GrandmaComponentData)) as GrandmaComponentData;
 
             Type dataType = Type.GetType(tempData.dataClassName);
 

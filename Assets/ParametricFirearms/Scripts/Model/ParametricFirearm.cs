@@ -9,6 +9,7 @@ namespace Grandma.ParametricFirearms
     public class ParametricFirearm : AgentItem
     {
         public PFProjectile projectilePrefab;
+        
         [Tooltip("Where the projectile will spawn from and its initial direction (z-axis)")]
         public Transform barrelTip;
 
@@ -148,7 +149,10 @@ namespace Grandma.ParametricFirearms
             if (State == PFState.Charging)
             {
                 //Interupt charging
-                StopCoroutine(chargeCoroutine);
+                if(chargeCoroutine != null)
+                {
+                    StopCoroutine(chargeCoroutine);
+                }
                 ChargeUpTimer = 0f;
 
                 if (OnTriggerReleased != null)
@@ -270,7 +274,7 @@ namespace Grandma.ParametricFirearms
                 }
 
                 //Clone projectile data
-                projectile.Launch(this.Agent, this, Instantiate(pfData.Projectile));
+                projectile.Launch(this.Agent, this, CreateProjectileData());
 
                 //Controlling ROF
                 //CUrrent ammo is decremented before being sent to GetWaitTime to avoid the off by one error
@@ -290,6 +294,17 @@ namespace Grandma.ParametricFirearms
 
             State = PFState.CoolDown;
             coolDownCoroutine = StartCoroutine(CoolDown());
+        }
+
+        private PFProjectileData CreateProjectileData()
+        {
+            var projData = ScriptableObject.CreateInstance(typeof(PFProjectileData)) as PFProjectileData;
+
+            projData.ImpactDamage = pfData.ImpactDamage;
+            projData.AreaDamage = pfData.AreaDamage;
+            projData.Trajectory = pfData.Trajectory;
+
+            return projData;
         }
 
         private IEnumerator Charge()
@@ -363,8 +378,7 @@ namespace Grandma.ParametricFirearms
         #endregion
 
         public override string ToString()
-        {
-
+        { 
             return string.Format("PF named {0} is in state: {1}, has current ammo {2}", pfData.Meta.name, State.ToString(), CurrentAmmo);
         }
     }

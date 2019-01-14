@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Grandma.Core
 {
+    [Serializable]
     [CreateAssetMenu(menuName = "Core/Positionable")]
     public class PositionableData : GrandmaComponentData
     {

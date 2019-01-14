@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90ecf9c1a002a4b3c8b7d883d8fb4e18, type: 3}
-  m_Name: DemoPFData
+  m_Name: Mod1
   m_EditorClassIdentifier: 
   associatedObjID: 0
   dataClassName: Grandma.ParametricFirearms.PFData
   agentID: 
   Meta:
-    name: Bangy Shooty Boi
+    name: Heavy Nightman
   Dynamic:
     CurrentAmmo: 0
     CoolDownTime: 0
     ChargeUpTime: 0
   ImpactDamage:
     baseDamage: 0
-    damageChangeByDistance: 10
+    damageChangeByDistance: 0
   AreaDamage:
     explodable: 0
     maxDamage: 0
-    maxBlastRange: 2
-    numImpactsToDetonate: 0
+    maxBlastRange: 0
+    numImpactsToDetonate: 2
   Trajectory:
     initialForceVector: 0
     maxInitialSpreadAngle: 0
@@ -36,11 +36,11 @@ MonoBehaviour:
   RateOfFire:
     baseRate: 0
     reloadingData:
-      count: 200
+      count: 0
       time: 0
     burstData: []
   Multishot:
-    numberOfShots: 2
+    numberOfShots: 1
   ChargeTime:
     chargeTime: 0
     requireFullyCharged: 0
