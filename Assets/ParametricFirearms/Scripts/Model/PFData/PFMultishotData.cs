@@ -8,7 +8,7 @@ namespace Grandma.ParametricFirearms
     /// Parameters to define the trajectory of a projectile
     /// </summary>
     [Serializable]
-    public class PFMultishotData
+    public class PFMultishotData : Core.IGrandmaModifiable
     {
         [Tooltip("The number of shots created on launch")]
         public int numberOfShots = 1;

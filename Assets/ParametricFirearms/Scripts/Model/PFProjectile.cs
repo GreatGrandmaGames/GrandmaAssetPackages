@@ -49,8 +49,6 @@ namespace Grandma.ParametricFirearms
         {
             base.OnRead(data);
 
-            Debug.Log("proj Read" + data.SerializeJSON());
-
             projData = data as PFProjectileData;
         }
 

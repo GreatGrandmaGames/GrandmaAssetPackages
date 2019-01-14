@@ -12,7 +12,7 @@ namespace Grandma.ParametricFirearms
     /// </summary>
     [Serializable]
     [CreateAssetMenu(menuName = "ParametricFirearms/Projectile Data")]
-    public class PFProjectileData : GrandmaComponentData
+    public class PFProjectileData : GrandmaComponentData, IGrandmaModifiable
     {
         [SerializeField]
         public PFImpactDamageData ImpactDamage;
