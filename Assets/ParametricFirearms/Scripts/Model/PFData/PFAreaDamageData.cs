@@ -7,7 +7,7 @@ namespace Grandma.ParametricFirearms
     /// Parameters to define the aread damage of a projectile
     /// </summary>
     [Serializable]
-    public class PFAreaDamageData
+    public class PFAreaDamageData : Core.IGrandmaModifiable
     {
         [Tooltip("Does this projectile explode")]
         public bool explodable;

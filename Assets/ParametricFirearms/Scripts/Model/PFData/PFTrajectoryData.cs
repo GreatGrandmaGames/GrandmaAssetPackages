@@ -7,7 +7,7 @@ namespace Grandma.ParametricFirearms
     /// Parameters to define the trajectory of a projectile
     /// </summary>
     [Serializable]
-    public class PFTrajectoryData
+    public class PFTrajectoryData : Core.IGrandmaModifiable
     {
         [Tooltip("The launch force applied to a shot projectile. Measured in Newtons")]
         public float initialForceVector;

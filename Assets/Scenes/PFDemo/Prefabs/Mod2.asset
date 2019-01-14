@@ -16,19 +16,19 @@ MonoBehaviour:
   dataClassName: Grandma.ParametricFirearms.PFData
   agentID: 
   Meta:
-    name: Revolving Revolver
+    name: Revolving Cuite
   Dynamic:
     CurrentAmmo: 0
     CoolDownTime: 0
     ChargeUpTime: 0
   ImpactDamage:
-    baseDamage: 0
+    baseDamage: 4
     damageChangeByDistance: 0
   AreaDamage:
     explodable: 0
     maxDamage: 0
     maxBlastRange: 0
-    numImpactsToDetonate: 22
+    numImpactsToDetonate: 0
   Trajectory:
     initialForceVector: 0
     maxInitialSpreadAngle: 0

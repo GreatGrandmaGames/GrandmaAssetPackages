@@ -16,18 +16,18 @@ MonoBehaviour:
   dataClassName: Grandma.ParametricFirearms.PFData
   agentID: 
   Meta:
-    name: Bangy Shooty Boi
+    name: Revolving Cuite
   Dynamic:
     CurrentAmmo: 0
     CoolDownTime: 0
     ChargeUpTime: 0
   ImpactDamage:
-    baseDamage: 0
-    damageChangeByDistance: 10
+    baseDamage: 10
+    damageChangeByDistance: 0
   AreaDamage:
     explodable: 0
     maxDamage: 0
-    maxBlastRange: 2
+    maxBlastRange: 0
     numImpactsToDetonate: 0
   Trajectory:
     initialForceVector: 0
@@ -36,11 +36,11 @@ MonoBehaviour:
   RateOfFire:
     baseRate: 0
     reloadingData:
-      count: 200
+      count: 10
       time: 0
     burstData: []
   Multishot:
-    numberOfShots: 2
+    numberOfShots: 1
   ChargeTime:
     chargeTime: 0
     requireFullyCharged: 0

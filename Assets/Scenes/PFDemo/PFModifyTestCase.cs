@@ -18,15 +18,13 @@ public class PFModifyTestCase : MonoBehaviour
             pf.Data.Modify("Mod1", mod1, 2f, GCDModifierType.Addition);
 
             PrintMod();
-
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            pf.Data.Modify("Mod2", mod2, 2f, GCDModifierType.Addition);
+            pf.Data.Modify("Mod2", mod2, 1f, GCDModifierType.Multiplication);
 
             PrintMod();
-
         }
 
         if (Input.GetKeyDown(KeyCode.D))
@@ -40,6 +38,6 @@ public class PFModifyTestCase : MonoBehaviour
 
     private void PrintMod()
     {
-        Debug.Log(pf.Data.Modified.SerializeJSON());
+        Debug.Log(pf.Data.Modified);
     }
 }
