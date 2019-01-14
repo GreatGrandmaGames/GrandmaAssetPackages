@@ -34,6 +34,8 @@ namespace Grandma.Core
         [NonSerialized]
         private DamageableData damageData;
 
+        public Action OnDestroyed;
+
         protected override void OnRead(GrandmaComponentData data)
         {
             base.OnRead(data);
@@ -50,6 +52,11 @@ namespace Grandma.Core
             }
 
             this.damageData.currentHealth -= payload.amount;
+            //TODO add flag to DamageableData
+            if (this.damageData.currentHealth <= 0)
+            {
+                OnDestroyed?.Invoke();
+            }
 
             Write();
         }
