@@ -45,7 +45,7 @@ namespace Grandma.Core
         {
             if (ValidateState() == false)
             {
-                Debug.LogWarning("Damageable: Cannot Heal as Data is not valid");
+                Debug.LogWarning("Damageable: Cannot Damage as Data is not valid");
                 return;
             }
 
