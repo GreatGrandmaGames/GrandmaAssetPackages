@@ -8,6 +8,7 @@ namespace Grandma.ParametricFirearms
     /// <summary>
     /// All data that defines a PF
     /// </summary>
+    [Serializable]
     [CreateAssetMenu(menuName = "ParametricFirearms/Firearm Data")]
     public class PFData : AgentItemData
     {
@@ -17,7 +18,11 @@ namespace Grandma.ParametricFirearms
         [SerializeField]
         public PFDynamicData Dynamic;
         [SerializeField]
-        public PFProjectileData Projectile;
+        public PFImpactDamageData ImpactDamage;
+        [SerializeField]
+        public PFAreaDamageData AreaDamage;
+        [SerializeField]
+        public PFTrajectoryData Trajectory;
         [SerializeField]
         public PFRateOfFireData RateOfFire;
         [SerializeField]
@@ -29,10 +34,9 @@ namespace Grandma.ParametricFirearms
         {
             this.Meta = new PFMetaData();
             this.Dynamic = new PFDynamicData();
-            if(this.Projectile == null)
-            {
-                this.Projectile = CreateInstance<PFProjectileData>();
-            }
+            this.ImpactDamage = new PFImpactDamageData();
+            this.AreaDamage = new PFAreaDamageData();
+            this.Trajectory = new PFTrajectoryData();
             this.RateOfFire = new PFRateOfFireData();
             this.Multishot = new PFMultishotData();
             this.ChargeTime = new PFChargeTimeData();

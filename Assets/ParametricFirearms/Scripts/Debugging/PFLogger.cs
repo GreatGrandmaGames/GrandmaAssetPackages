@@ -34,7 +34,7 @@ public class PFLogger : MonoBehaviour {
             chargeUp.minValue = 0f;
 
             coolDown.value = pfData.Dynamic.CoolDownTime;
-            coolDown.maxValue = pfData.RateOfFire.reloadingData.time;//TODO: current cooldown
+            coolDown.maxValue = pfData.RateOfFire.ReloadTime;
             coolDown.minValue = 0f;
             ammo.text = string.Format("{0} / {1}", pfData.Dynamic.CurrentAmmo, pfData.RateOfFire.AmmoCapacity);
         };

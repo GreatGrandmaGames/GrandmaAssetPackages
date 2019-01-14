@@ -15,19 +15,21 @@ namespace Grandma.ParametricFirearms
     {
         [Tooltip("The default time between shots. Measured in seconds")]
         public float baseRate;
-        
+
         //Separated out for clarity, since players can trigger the reload manually
         //and when we call this data, we have to reset the ammo count
+        [SerializeField]
         public PFBurstData reloadingData;
 
         //All non-reload burst data. N < reloadingData.N, otherwise the burst data will never be triggered
+        [SerializeField]
         public List<PFBurstData> burstData = new List<PFBurstData>();
 
         public int AmmoCapacity
         {
             get
             {
-                return reloadingData != null ? reloadingData.count : 0;
+                return reloadingData.count;
             }
         }
 
@@ -35,7 +37,7 @@ namespace Grandma.ParametricFirearms
         {
             get
             {
-                return reloadingData != null ? reloadingData.time : 0f;
+                return reloadingData.time;
             }
         }
 
@@ -87,7 +89,7 @@ namespace Grandma.ParametricFirearms
     }
 
     [Serializable]
-    public class PFBurstData
+    public struct PFBurstData
     {
         [Tooltip("The number of shots in the current burst")]
         public int count;

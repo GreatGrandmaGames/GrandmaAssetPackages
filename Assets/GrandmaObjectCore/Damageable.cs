@@ -3,6 +3,7 @@ using System;
 
 namespace Grandma.Core
 {
+    [Serializable]
     [CreateAssetMenu(menuName = "Core/Damageable Data")]
     public class DamageableData : GrandmaComponentData
     {

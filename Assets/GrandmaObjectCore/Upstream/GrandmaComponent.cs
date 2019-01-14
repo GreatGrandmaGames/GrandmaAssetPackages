@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 namespace Grandma.Core
@@ -11,6 +13,7 @@ namespace Grandma.Core
 
         [Tooltip("Should this component use the canonical Scriptable Object or create an instance for its own use?")]
         public bool duplicateData = true;
+
         public GrandmaComponentData Data;
 
         /// <summary>
@@ -42,33 +45,32 @@ namespace Grandma.Core
 
             if (Data != null)
             {
-                /*
-                 * Issue: Does not deep copy
-                 * 
-                 * TODO: find solution to deep copying scriptableobjects
                 if (duplicateData)
                 {
-                    Data = Instantiate(Data);
-                }
-                */
+                    Data = Data.Clone();
 
-                OnRead(Data);
+                    Debug.Log("GComp: Clone " + Data.SerializeJSON());
 
-                if (OnUpdated != null)
-                {
-                    OnUpdated(this);
                 }
+
+                Read(Data);
             }
         }
 
         protected virtual void Start() { }
 
+        #region Read
         /// <summary>
         /// Set component state from some provided data
         /// </summary>
         /// <param name="data"></param>
         public void Read(GrandmaComponentData data)
         {
+            if(data == null)
+            {
+                return;
+            } 
+
             this.Data = data;
 
             OnRead(data);
@@ -80,6 +82,7 @@ namespace Grandma.Core
         }
 
         protected virtual void OnRead(GrandmaComponentData data) { }
+        #endregion
 
         #region Write
         /// <summary>
@@ -97,7 +100,7 @@ namespace Grandma.Core
             //Give the component an opportunity to reach out and update any fields it needs to before write
             OnWrite();
 
-            return JsonUtility.ToJson(this.Data);
+            return Data.SerializeJSON();
         }
 
         //Helper - alert that data has changed
