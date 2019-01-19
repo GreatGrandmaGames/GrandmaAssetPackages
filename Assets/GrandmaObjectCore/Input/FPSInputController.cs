@@ -4,14 +4,13 @@ using UnityEngine;
 
 namespace Grandma.Core
 {
-    [RequireComponent(typeof(MoveController))]
+    [RequireComponent(typeof(Moveable))]
     [RequireComponent(typeof(ZeroGMovement))]
     [RequireComponent(typeof(GroundMovement))]
-
     //this class is the component you add to your Player GameObject
     public class FPSInputController : MonoBehaviour
     {
-        private MoveController mc;
+        private Moveable mc;
 
         //I think this should be an enumerator
         private GroundMovement groundMovement;
@@ -19,7 +18,7 @@ namespace Grandma.Core
 
         private void Awake()
         {
-            mc = GetComponent<MoveController>();
+            mc = GetComponent<Moveable>();
             groundMovement = GetComponent<GroundMovement>();
             zeroGMovement = GetComponent<ZeroGMovement>();
 
@@ -27,11 +26,12 @@ namespace Grandma.Core
             {
                 Debug.Log("GROUND MOVEMENT NULL");
             }
+
             //setup the move controller properly
             if (groundMovement != null && zeroGMovement != null)
             {
-                mc.AddMode(groundMovement);
-                mc.AddMode(zeroGMovement);
+                mc.AllModes.Add(groundMovement);
+                mc.AllModes.Add(zeroGMovement);
 
                 mc.SwitchMode(groundMovement);
             }
@@ -50,14 +50,7 @@ namespace Grandma.Core
         {
             if (Input.GetKeyDown("Switch"))
             {
-                if (mc.active == groundMovement)
-                {
-                    mc.SwitchMode(zeroGMovement);
-                }
-                if (mc.active == zeroGMovement)
-                {
-                    mc.SwitchMode(groundMovement);
-                }
+                mc.NextMode();
             }
         }
     }
