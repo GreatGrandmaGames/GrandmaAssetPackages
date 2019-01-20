@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Grandma.Core
 {
    
-    public abstract class Moveable : Positionable
+    public class Moveable : Positionable
     {
         //MoveControllers can be set via inspector. Do not initialise a new list here
         //or the inspector fields will be wiped!
@@ -78,4 +78,16 @@ namespace Grandma.Core
             rb = GetComponent<Rigidbody>();
         }
     }
+
+    [RequireComponent(typeof(Rigidbody2D))]
+    public abstract class RBMove2D : MoveController
+    {
+        protected Rigidbody2D rb;
+        protected override void Awake()
+        {
+            base.Awake();
+            rb = GetComponent<Rigidbody2D>();
+        }
+    }
+
 }
