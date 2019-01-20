@@ -10,6 +10,7 @@ namespace Grandma.Core
         //or the inspector fields will be wiped!
         [SerializeField]
         private List<MoveController> allModes;
+        private MoveController active;
 
         public List<MoveController> AllModes
         {
@@ -23,8 +24,6 @@ namespace Grandma.Core
                 return allModes;
             }
         }
-
-        private MoveController active;
 
         //Can be null - no movement system will be active
         public void SwitchMode(MoveController switchTo)

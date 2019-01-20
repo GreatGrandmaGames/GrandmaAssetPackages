@@ -18,7 +18,6 @@ public class InputControllerTopDown2D : MonoBehaviour
         if(groundMovement2D == null)
         {
             Debug.Log("GROUND MOVEMENT NULL");
-
         }
 
         if (groundMovement2D != null)
@@ -31,5 +30,4 @@ public class InputControllerTopDown2D : MonoBehaviour
             throw new System.Exception("FPSInputController: Awake - Components Null");
         }
     }
-
 }

@@ -24,11 +24,6 @@ namespace Grandma.Core
         }
         protected override void ApplyVelocity(Vector3 velocity)
         {
-            /*if (velocity.y > 0)
-            {
-                Debug.Log("JUMP");
-                rb.AddForce(new Vector2(0f, momentumMovement2DData.jumpForce), ForceMode2D.Impulse);
-            }*/
             rb.MovePosition(rb.position + (Vector2)velocity * Time.unscaledDeltaTime);
             //rb.AddForce(transform.right * (Vector2) velocity);
         }
@@ -43,6 +38,7 @@ namespace Grandma.Core
         {
             float x = Input.GetAxisRaw("Horizontal");
             float y = Input.GetAxisRaw("Vertical");
+            //im polling inputting!
             return new Vector3(x, y, 0f);
         }
     }
