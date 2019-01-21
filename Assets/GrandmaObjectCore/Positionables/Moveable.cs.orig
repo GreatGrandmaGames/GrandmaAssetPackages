@@ -1,14 +1,21 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
+<<<<<<< HEAD
 namespace Grandma
 { 
+=======
+namespace Grandma.Core
+{
+   
+>>>>>>> 2954370c0558e354a591bc737709ae01e38d781a
     public class Moveable : Positionable
     {
         //MoveControllers can be set via inspector. Do not initialise a new list here
         //or the inspector fields will be wiped!
         [SerializeField]
         private List<MoveController> allModes;
+        private MoveController active;
 
         public List<MoveController> AllModes
         {
@@ -23,6 +30,7 @@ namespace Grandma
             }
         }
 
+<<<<<<< HEAD
         //Calls SwitchMode for this controller on Start
         public MoveController StartingController;
 
@@ -35,6 +43,8 @@ namespace Grandma
             SwitchMode(StartingController);
         }
 
+=======
+>>>>>>> 2954370c0558e354a591bc737709ae01e38d781a
         //Can be null - no movement system will be active
         public void SwitchMode(MoveController switchTo)
         { 
@@ -71,6 +81,9 @@ namespace Grandma
             SwitchMode(AllModes[(currIndex + 1) % AllModes.Count]);
         }
     }
+
+<<<<<<< HEAD
+=======
     [RequireComponent(typeof(Rigidbody))]
     public abstract class RBMove : MoveController
     {
@@ -93,4 +106,5 @@ namespace Grandma
         }
     }
 
+>>>>>>> 2954370c0558e354a591bc737709ae01e38d781a
 }
