@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-using Grandma.Core;
+using Grandma;
 using Grandma.Utility;
 
 namespace Grandma.ParametricFirearms
 {
+    //TODO: make use of Moveable here
     [RequireComponent(typeof(Rigidbody))]
     public class PFProjectile : GrandmaComponent
     {
@@ -30,6 +31,7 @@ namespace Grandma.ParametricFirearms
             base.Awake();
 
             rb = GetComponent<Rigidbody>();
+            rb.useGravity = false;
 
             //Clean up
             Destroy(gameObject, 5f);

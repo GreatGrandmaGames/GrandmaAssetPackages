@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-namespace Grandma.Core
+namespace Grandma
 {
     [RequireComponent(typeof(GrandmaObject))]
     public abstract class GrandmaComponent : MonoBehaviour
@@ -25,7 +25,7 @@ namespace Grandma.Core
         {
             get
             {
-                return Base.Data.id;
+                return Base?.Data.id;
             }
         }
 
@@ -113,7 +113,6 @@ namespace Grandma.Core
             }
 
             Data.associatedObjID = Base.Data.id;
-            //Send to network 
 
             //Update based on new Data
             Read(Data);

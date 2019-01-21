@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Grandma.Core
+namespace Grandma
 {
     [CreateAssetMenu(menuName = "Core/GroundMovementData")]
     public class GroundMovementData : PositionableData

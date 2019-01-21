@@ -11,7 +11,7 @@ namespace Grandma.ParametricFirearms
     //The fields here are private, to allow this class to do some
     //pre-processing before being sent off to the PF
     [Serializable]
-    public class PFRateOfFireData : Core.IGrandmaModifiable
+    public class PFRateOfFireData : IGrandmaModifiable
     {
         [Tooltip("The default time between shots. Measured in seconds")]
         public float baseRate;

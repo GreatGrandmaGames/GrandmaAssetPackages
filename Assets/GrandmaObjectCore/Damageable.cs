@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-namespace Grandma.Core
+namespace Grandma
 {
     [Serializable]
     [CreateAssetMenu(menuName = "Core/Damageable Data")]

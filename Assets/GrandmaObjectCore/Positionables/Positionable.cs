@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Grandma.Core
+namespace Grandma
 {
     [Serializable]
     [CreateAssetMenu(menuName = "Core/Positionable")]

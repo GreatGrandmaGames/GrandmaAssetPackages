@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Grandma.Core
+namespace Grandma
 {
     [CreateAssetMenu(menuName = "ParametricFirearms/Faction Data")]
     public class FactionData : GrandmaComponentData

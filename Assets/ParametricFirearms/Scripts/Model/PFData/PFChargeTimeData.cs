@@ -7,7 +7,7 @@ namespace Grandma.ParametricFirearms
     /// Parameters to define the charge-up properties of a PF
     /// </summary>
     [Serializable]
-    public class PFChargeTimeData : Core.IGrandmaModifiable
+    public class PFChargeTimeData : IGrandmaModifiable
     {
         [Tooltip("The time to fully charge the weapon. Measured in seconds")]
         public float chargeTime;

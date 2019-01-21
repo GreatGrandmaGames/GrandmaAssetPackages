@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Grandma.Core;
+using Grandma;
 using Grandma.ParametricFirearms;
 
 public class PFModifyTestCase : MonoBehaviour

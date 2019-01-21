@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Grandma.Core
+namespace Grandma
 {
     [Serializable]
     public class AgentItemData : GrandmaComponentData
@@ -46,7 +46,7 @@ namespace Grandma.Core
 
             if (agentItemData != null)
             {
-                Agent = GrandmaObjectManager.Instance.GetComponentByID(agentItemData.agentID, typeof(Agent)) as Agent;
+                Agent = GrandmaObjectManager.Instance.GetComponentByID<Agent>(agentItemData.agentID);
             }
         }
 

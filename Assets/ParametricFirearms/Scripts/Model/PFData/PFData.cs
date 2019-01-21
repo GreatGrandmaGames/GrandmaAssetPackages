@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-using Grandma.Core;
+using Grandma;
 
 namespace Grandma.ParametricFirearms
 {

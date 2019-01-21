@@ -29,14 +29,24 @@ public class PFLogger : MonoBehaviour {
 
             var pfData = ((pfComp as ParametricFirearm).Data as PFData);
 
-            chargeUp.value = pfData.Dynamic.ChargeUpTime;
-            chargeUp.maxValue = pfData.ChargeTime.chargeTime;
-            chargeUp.minValue = 0f;
+            if(chargeUp != null)
+            {
+                chargeUp.value = pfData.Dynamic.ChargeUpTime;
+                chargeUp.maxValue = pfData.ChargeTime.chargeTime;
+                chargeUp.minValue = 0f;
+            }
 
-            coolDown.value = pfData.Dynamic.CoolDownTime;
-            coolDown.maxValue = pfData.RateOfFire.ReloadTime;
-            coolDown.minValue = 0f;
-            ammo.text = string.Format("{0} / {1}", pfData.Dynamic.CurrentAmmo, pfData.RateOfFire.AmmoCapacity);
+            if (coolDown)
+            {
+                coolDown.value = pfData.Dynamic.CoolDownTime;
+                coolDown.maxValue = pfData.RateOfFire.ReloadTime;
+                coolDown.minValue = 0f;
+            }
+
+            if(ammo) 
+            {
+                ammo.text = string.Format("{0} / {1}", pfData.Dynamic.CurrentAmmo, pfData.RateOfFire.AmmoCapacity);
+            }
         };
 	}
 }

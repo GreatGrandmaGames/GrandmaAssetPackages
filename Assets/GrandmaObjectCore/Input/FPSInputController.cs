@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Grandma.Core
+namespace Grandma
 {
     [RequireComponent(typeof(Moveable))]
     [RequireComponent(typeof(ZeroGMovement))]

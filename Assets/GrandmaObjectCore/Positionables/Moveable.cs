@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Grandma.Core
-{
-   
-    public abstract class Moveable : Positionable
+namespace Grandma
+{ 
+    public class Moveable : Positionable
     {
         //MoveControllers can be set via inspector. Do not initialise a new list here
         //or the inspector fields will be wiped!
@@ -24,14 +23,24 @@ namespace Grandma.Core
             }
         }
 
-        private MoveController active;
+        //Calls SwitchMode for this controller on Start
+        public MoveController StartingController;
+
+        public MoveController Active { get; private set; }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            
+            SwitchMode(StartingController);
+        }
 
         //Can be null - no movement system will be active
         public void SwitchMode(MoveController switchTo)
         { 
-            if (active != null)
+            if (Active != null)
             {
-                active.Deactivate();
+                Active.Deactivate();
             }
 
             //Lazy add
@@ -40,22 +49,17 @@ namespace Grandma.Core
                 AllModes.Add(switchTo);
             }
 
-            active = switchTo;
+            Active = switchTo;
 
-            if (active != null)
+            if (Active != null)
             {
-                active.Activate();
+                Active.Activate();
             }
         }
 
-        private void FixedUpdate()
-        {
-            if (active != null)
-            {
-                active.Move();
-            }
-        }
-
+        /// <summary>
+        /// For debugging
+        /// </summary>
         public void NextMode()
         {
             if(AllModes.Count <= 0)
@@ -63,19 +67,9 @@ namespace Grandma.Core
                 return;
             }
 
-            int currIndex = allModes.FindIndex(x => x == active);
+            int currIndex = allModes.FindIndex(x => x == Active);
             SwitchMode(AllModes[(currIndex + 1) % AllModes.Count]);
         }
     }
 
-    [RequireComponent(typeof(Rigidbody))]
-    public abstract class RBMove : MoveController
-    {
-        protected Rigidbody rb;
-        protected override void Awake()
-        {
-            base.Awake();
-            rb = GetComponent<Rigidbody>();
-        }
-    }
 }

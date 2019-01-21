@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-namespace Grandma.Core
+namespace Grandma
 {
     public abstract class Objective : GrandmaComponent
     {

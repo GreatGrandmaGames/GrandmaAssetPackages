@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Grandma.Core
+namespace Grandma
 {
     public class GrandmaObjectManager : MonoBehaviour
     {
@@ -75,6 +75,11 @@ namespace Grandma.Core
         public GrandmaObject GetByID(string id)
         {
             return allObjects.SingleOrDefault(x => x.Data.id == id);
+        }
+
+        public T GetComponentByID<T>(string id) where T : GrandmaComponent
+        {
+            return GetComponentByID(id, typeof(T)) as T;
         }
 
         public GrandmaComponent GetComponentByID(string id, Type componentType)

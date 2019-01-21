@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Grandma.Core
+namespace Grandma
 {
     [Serializable]
     [CreateAssetMenu(menuName = "Core/Agent Data")]
@@ -34,7 +34,7 @@ namespace Grandma.Core
 
             if (agentData != null)
             {
-                Faction = GrandmaObjectManager.Instance.GetComponentByID(agentData.factionID, typeof(Faction)) as Faction;
+                Faction = GrandmaObjectManager.Instance.GetComponentByID<Faction>(agentData.factionID);
             }
         }
 

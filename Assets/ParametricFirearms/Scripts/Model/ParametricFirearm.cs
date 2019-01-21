@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-using Grandma.Core;
+using Grandma;
 
 namespace Grandma.ParametricFirearms
 {
@@ -14,19 +14,18 @@ namespace Grandma.ParametricFirearms
         public Transform barrelTip;
 
         //Data Properties
-        [NonSerialized]
-        private PFData pfData;
+        public PFData PFData { get; private set; }
 
         //Ammo remaining in the clip
         public int CurrentAmmo
         {
             get
             {
-                return pfData.Dynamic.CurrentAmmo;
+                return PFData.Dynamic.CurrentAmmo;
             }
             private set
             {
-                pfData.Dynamic.CurrentAmmo = value;
+                PFData.Dynamic.CurrentAmmo = value;
 
                 Write();
             }
@@ -36,11 +35,11 @@ namespace Grandma.ParametricFirearms
         {
             get
             {
-                return pfData.Dynamic.CoolDownTime;
+                return PFData.Dynamic.CoolDownTime;
             }
             private set
             {
-                pfData.Dynamic.CoolDownTime = Mathf.Max(value, 0f);
+                PFData.Dynamic.CoolDownTime = Mathf.Max(value, 0f);
 
                 Write();
             }
@@ -50,11 +49,11 @@ namespace Grandma.ParametricFirearms
         {
             get
             {
-                return pfData.Dynamic.ChargeUpTime;
+                return PFData.Dynamic.ChargeUpTime;
             }
             private set
             {
-                pfData.Dynamic.ChargeUpTime = Mathf.Min(value, pfData.ChargeTime.chargeTime);
+                PFData.Dynamic.ChargeUpTime = Mathf.Min(value, PFData.ChargeTime.chargeTime);
 
                 Write();
             }
@@ -113,13 +112,13 @@ namespace Grandma.ParametricFirearms
         {
             base.OnRead(data);
 
-            bool isNew = pfData == null;
+            bool isNew = PFData == null;
 
-            pfData = data as PFData;
+            PFData = data as PFData;
 
-            if (isNew && pfData != null)
+            if (isNew && PFData != null)
             {
-                CurrentAmmo = pfData.RateOfFire.AmmoCapacity;
+                CurrentAmmo = PFData.RateOfFire.AmmoCapacity;
             }
         }
 
@@ -160,7 +159,7 @@ namespace Grandma.ParametricFirearms
                     OnTriggerReleased.Invoke(this);
                 }
 
-                if (pfData.ChargeTime.requireFullyCharged == false)
+                if (PFData.ChargeTime.requireFullyCharged == false)
                 {
                     //Fire
                     Fire();
@@ -262,7 +261,7 @@ namespace Grandma.ParametricFirearms
                 return;
             }
 
-            for (int i = 0; i < pfData.Multishot.numberOfShots; i++)
+            for (int i = 0; i < PFData.Multishot.numberOfShots; i++)
             {
                 //Spawn the projectile
                 var projectile = Instantiate(projectilePrefab);
@@ -300,9 +299,9 @@ namespace Grandma.ParametricFirearms
         {
             var projData = ScriptableObject.CreateInstance(typeof(PFProjectileData)) as PFProjectileData;
 
-            projData.ImpactDamage = pfData.ImpactDamage;
-            projData.AreaDamage = pfData.AreaDamage;
-            projData.Trajectory = pfData.Trajectory;
+            projData.ImpactDamage = PFData.ImpactDamage;
+            projData.AreaDamage = PFData.AreaDamage;
+            projData.Trajectory = PFData.Trajectory;
 
             return projData;
         }
@@ -311,7 +310,7 @@ namespace Grandma.ParametricFirearms
         {
             ChargeUpTimer = 0f;
 
-            while(ChargeUpTimer < pfData.ChargeTime.chargeTime)
+            while(ChargeUpTimer < PFData.ChargeTime.chargeTime)
             {
                 if(OnCharge != null)
                 {
@@ -337,7 +336,7 @@ namespace Grandma.ParametricFirearms
         /// <returns></returns>
         private IEnumerator CoolDown()
         {
-            CoolDownTimer = pfData.RateOfFire.GetWaitTime(CurrentAmmo);
+            CoolDownTimer = PFData.RateOfFire.GetWaitTime(CurrentAmmo);
 
             while(CoolDownTimer > 0f)
             {
@@ -356,7 +355,7 @@ namespace Grandma.ParametricFirearms
             //If was a forced reload
             if (CurrentAmmo <= 0)
             {
-                CurrentAmmo = pfData.RateOfFire.AmmoCapacity;
+                CurrentAmmo = PFData.RateOfFire.AmmoCapacity;
             }
 
             if(OnCoolDownComplete != null)
@@ -369,17 +368,17 @@ namespace Grandma.ParametricFirearms
 
         private IEnumerator ManualReload_CO()
         {
-            yield return new WaitForSeconds(pfData.RateOfFire.ReloadTime);
+            yield return new WaitForSeconds(PFData.RateOfFire.ReloadTime);
 
             //for now, we are assuming the Overwatch model of ammo - infinte with reloads
-            CurrentAmmo = pfData.RateOfFire.AmmoCapacity;
+            CurrentAmmo = PFData.RateOfFire.AmmoCapacity;
             State = PFState.Ready;
         }
         #endregion
 
         public override string ToString()
         { 
-            return string.Format("PF named {0} is in state: {1}, has current ammo {2}", pfData.Meta.name, State.ToString(), CurrentAmmo);
+            return string.Format("PF named {0} is in state: {1}, has current ammo {2}", PFData.Meta.name, State.ToString(), CurrentAmmo);
         }
     }
 }

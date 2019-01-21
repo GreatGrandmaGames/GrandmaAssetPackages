@@ -16,13 +16,13 @@ MonoBehaviour:
   dataClassName: Grandma.ParametricFirearms.PFData
   agentID: 
   Meta:
-    name: Revolving Cuite
+    name: Revolving Cricket
   Dynamic:
     CurrentAmmo: 0
     CoolDownTime: 0
     ChargeUpTime: 0
   ImpactDamage:
-    baseDamage: 10
+    baseDamage: 0
     damageChangeByDistance: 0
   AreaDamage:
     explodable: 0
@@ -30,14 +30,14 @@ MonoBehaviour:
     maxBlastRange: 0
     numImpactsToDetonate: 0
   Trajectory:
-    initialForceVector: 0
-    maxInitialSpreadAngle: 0
-    dropOffRatio: 0
+    initialForceVector: 10
+    maxInitialSpreadAngle: 0.02
+    dropOffRatio: 0.02
   RateOfFire:
-    baseRate: 0
+    baseRate: 0.2
     reloadingData:
       count: 10
-      time: 0
+      time: 0.4
     burstData: []
   Multishot:
     numberOfShots: 1

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Grandma.Core;
+using Grandma;
 
 public class GrandmaObjectUnitTest : MonoBehaviour {
 
