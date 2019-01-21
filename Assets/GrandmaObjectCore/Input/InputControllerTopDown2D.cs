@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Grandma.Core;
+using Grandma;
 
 [RequireComponent(typeof(Moveable))]
 [RequireComponent(typeof(GroundMovement2D))]

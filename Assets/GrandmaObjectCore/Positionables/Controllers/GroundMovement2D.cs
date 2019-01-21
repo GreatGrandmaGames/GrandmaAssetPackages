@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Grandma.Core
+namespace Grandma
 {
     [CreateAssetMenu(menuName = "Core/MovementData/2D/GroundMovement2DData")]
-    public class GroundMovement2DData : PositionableData
+    public class GroundMovement2DData : GrandmaComponentData
     {
         public float speedScalar;
         //public float jumpForce;

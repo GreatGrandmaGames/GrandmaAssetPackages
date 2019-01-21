@@ -71,26 +71,4 @@ namespace Grandma
             SwitchMode(AllModes[(currIndex + 1) % AllModes.Count]);
         }
     }
-    [RequireComponent(typeof(Rigidbody))]
-    public abstract class RBMove : MoveController
-    {
-        protected Rigidbody rb;
-        protected override void Awake()
-        {
-            base.Awake();
-            rb = GetComponent<Rigidbody>();
-        }
-    }
-
-    [RequireComponent(typeof(Rigidbody2D))]
-    public abstract class RBMove2D : MoveController
-    {
-        protected Rigidbody2D rb;
-        protected override void Awake()
-        {
-            base.Awake();
-            rb = GetComponent<Rigidbody2D>();
-        }
-    }
-
 }
