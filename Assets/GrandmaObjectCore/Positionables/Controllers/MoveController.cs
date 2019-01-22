@@ -8,7 +8,7 @@ namespace Grandma
     {
         public virtual bool CanMove { get; set; } = true;
 
-        protected bool active;
+        protected bool active { get; private set; }
 
         public virtual void Jump() { }
         //activate specific movement settings

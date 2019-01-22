@@ -22,6 +22,6 @@ namespace Grandma
             }
         }
 
-        public abstract void OnTargetSet(Vector3 target);
+        protected abstract void OnTargetSet(Vector3 target);
     }
 }

@@ -25,7 +25,7 @@ namespace Grandma
             nvAgent = GetComponent<NavMeshAgent>();
         }
 
-        public override void OnTargetSet(Vector3 target)
+        protected override void OnTargetSet(Vector3 target)
         {
             nvAgent.SetDestination(target);
         }
