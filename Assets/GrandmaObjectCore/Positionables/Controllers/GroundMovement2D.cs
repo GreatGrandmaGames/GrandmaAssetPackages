@@ -15,7 +15,11 @@ namespace Grandma
     {
         [System.NonSerialized]
         private GroundMovement2DData groundMovement2DData;
-
+        protected override void Awake()
+        {
+            base.Awake();
+            base.Activate();
+        }
         protected override void OnRead(GrandmaComponentData data)
         {
             base.OnRead(data);

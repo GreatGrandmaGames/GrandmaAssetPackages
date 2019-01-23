@@ -15,13 +15,15 @@ public class InputControllerTopDown2D : MonoBehaviour
         moveable = GetComponent<Moveable>();
 
         groundMovement2D = GetComponent<GroundMovement2D>();
-        if(groundMovement2D == null)
+
+        if (groundMovement2D == null)
         {
             Debug.Log("GROUND MOVEMENT NULL");
         }
 
         if (groundMovement2D != null)
         {
+            groundMovement2D.Activate();
             moveable.AllModes.Add(groundMovement2D);
             moveable.SwitchMode(groundMovement2D);
         }
