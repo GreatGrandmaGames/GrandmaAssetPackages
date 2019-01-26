@@ -88,7 +88,9 @@ namespace Grandma.ParametricFirearms
             //Movement Speed changes established
             pf.OnUpdated += (updatedComp) =>
             {
-                if (updatedComp is ParametricFirearm updatedPf)
+                var updatedPf = updatedComp as ParametricFirearm;
+
+                if (updatedComp != null)
                 {
                 /*
                 //State transitions to charging - firing begins
@@ -133,8 +135,9 @@ namespace Grandma.ParametricFirearms
 
             while (TargetInSight(d) == false || TargetInRange(d.transform) == false)
             {
+                var vecMove = moveable.ActiveController as MoveToVector;
 
-                if (moveable.ActiveController is MoveToVector vecMove)
+                if (vecMove != null)
                 {
                     vecMove.Target = d.transform.position;
                 }

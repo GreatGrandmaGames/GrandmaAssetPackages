@@ -10,7 +10,12 @@ namespace Grandma
     {
         private NavMeshAgent nvAgent;
 
-        public override bool CanMove { get => base.CanMove; 
+        public override bool CanMove
+        {
+            get
+            {
+                return base.CanMove;
+            }
             set 
             {
                 base.CanMove = value;

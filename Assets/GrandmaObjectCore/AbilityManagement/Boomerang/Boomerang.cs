@@ -33,7 +33,6 @@ public class Boomerang : GrandmaComponent
     protected override void Awake()
     {
         base.Awake();
-        StartCoroutine(PollForRecall());
         GetComponent<Collider2D>().isTrigger = true;
         Destroy(this, boomerangData.timeUntilDestroy);
     }
@@ -51,33 +50,39 @@ public class Boomerang : GrandmaComponent
     public void Fire(Transform returnTransform)
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        state = STATE.FORWARDS;
         GetComponent<Rigidbody2D>().velocity = (mousePosition - returnTransform.position).normalized * boomerangData.forwardSpeed;
+
+        Physics2D.IgnoreCollision(returnTransform.GetComponentInChildren<Collider2D>(), GetComponent<Collider2D>(), true);
+
         this.returnTransform = returnTransform;
+        transform.position = returnTransform.position;
+
+        state = STATE.FORWARDS;
+
+        StartCoroutine(PollForRecall());
     }
 
     private IEnumerator RecallBullet()
     {
         state = STATE.BACKWARDS;
 
+        Physics2D.IgnoreCollision(returnTransform.GetComponentInChildren<Collider2D>(), GetComponent<Collider2D>(), false);
+
         while (Vector2.Distance(transform.position, returnTransform.position) > Mathf.Epsilon)
-        {
-           
+        {         
             Vector2 distance = new Vector2(transform.position.x - returnTransform.position.x, transform.position.y - returnTransform.position.y);
-            distance = distance.normalized * boomerangData.backSpeed;
+            distance = distance.normalized * -boomerangData.backSpeed;
             GetComponent<Rigidbody2D>().velocity = distance;
 
             //this line tells the coroutine to wait for one frame
             yield return null;
-
         }
     }
 
     private IEnumerator PollForRecall()
     {
-        while(Input.GetButtonDown("Recall") == false)
+        while(Input.GetKeyDown(KeyCode.R) == false)
         {
-            Debug.Log("Not recalling");
             yield return null;
         }
         StartCoroutine(RecallBullet());
@@ -85,6 +90,12 @@ public class Boomerang : GrandmaComponent
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.GetComponentInParent<Rigidbody2D>()?.transform == returnTransform)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
         if (this.state == STATE.FORWARDS)
         {
             // ? null propogation, basically if (collision != null)

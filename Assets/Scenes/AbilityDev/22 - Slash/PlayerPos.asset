@@ -9,13 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: MovementData
-  m_EditorClassIdentifier: Assembly-CSharp:Grandma:SidescrollerMovementData
-  componentID: 8d9fb8dd-6db4-4a4f-a505-e85b6952bbbe
+  m_Name: PlayerPos
+  m_EditorClassIdentifier: Assembly-CSharp:Grandma:PositionableData
+  componentID: 
   associatedObjID: 
-  dataClassName: Grandma.SidescrollerMovementData
-  speedScalar: 300
-  jumpForce: 100
-  canJump: 1
-  maxSpeed: 100
-  numberOfJumps: 2
+  dataClassName: 
+  position: {x: 0, y: 0, z: 0}
+  rotation: {x: 0, y: 0, z: 0}
+  localScale: {x: 1, y: 1, z: 1}
