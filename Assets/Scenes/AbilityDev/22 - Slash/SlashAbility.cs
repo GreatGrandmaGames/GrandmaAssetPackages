@@ -4,7 +4,8 @@ using UnityEngine;
 using Grandma;
 public class SlashAbility : Ability
 {
-    public float castTime = 2f;
+    //use "cooldown" system for castTime
+    public float castTimeSeconds = 2f;
     private bool casting = false;
 
     /*
@@ -20,14 +21,19 @@ public class SlashAbility : Ability
      * the enemy will
      * a. be in stun lock
      * b. not be able to use their abilities
-     * c. if the cast time completes, will die
+     * c. if the cast time completes, enemy will die
      * d. if the cast time is interrupted, they can attack the player
-
     */
+
     public override void Activate()
     {
         Debug.Log("IM SLASHING!");
+        //KillEnemy();
         casting = true;
+    }
+    public void KillEnemy(Damageable d)
+    {
+
     }
 
     public override bool WillActivate()

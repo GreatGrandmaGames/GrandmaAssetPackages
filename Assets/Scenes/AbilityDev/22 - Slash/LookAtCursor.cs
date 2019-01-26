@@ -9,7 +9,7 @@ public class LookAtCursor : LookAt
     {
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
-    public void Update()
+    public void FixedUpdate()
     {
         base.InstantRotation();
     }

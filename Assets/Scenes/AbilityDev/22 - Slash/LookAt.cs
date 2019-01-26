@@ -26,6 +26,7 @@ namespace Grandma
             return rotation;
         }
 
+
         public abstract Vector3 GetTarget();
     }
 }
