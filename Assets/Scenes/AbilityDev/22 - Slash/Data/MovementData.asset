@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: MovementData
+  m_EditorClassIdentifier: Assembly-CSharp:Grandma:SidescrollerMovementData
+  componentID: 8d9fb8dd-6db4-4a4f-a505-e85b6952bbbe
+  associatedObjID: 
+  dataClassName: Grandma.SidescrollerMovementData
+  speedScalar: 300
+  jumpForce: 100
+  canJump: 1
+  maxSpeed: 100
+  numberOfJumps: 2

@@ -26,12 +26,6 @@ namespace Grandma
         private bool hasInitialized = false;
         private int currentJumps = 0;
 
-        protected override void Awake()
-        {
-            base.Awake();
-            base.Activate();
-        }
-
         protected override void OnRead(GrandmaComponentData data)
         {
             base.OnRead(data);
@@ -42,8 +36,8 @@ namespace Grandma
                 hasInitialized = true;
                 currentJumps = sidescrollerMovementData.numberOfJumps;
             }
-
         }
+
         protected override void ApplyVelocity(Vector3 velocity)
         {
             if (Mathf.Sign(velocity.x) * rb.velocity.x < sidescrollerMovementData.maxSpeed)
@@ -76,6 +70,7 @@ namespace Grandma
             //calculate velocity
             return new Vector3(InputVector.x * sidescrollerMovementData.speedScalar, 0f, 0f);
         }
+
         void Update()
         {
             if (Input.GetButtonDown("Jump") && sidescrollerMovementData.canJump)
