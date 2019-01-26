@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GroundMove2d
   m_EditorClassIdentifier: Assembly-CSharp:Grandma:GroundMovement2DData
   associatedObjID: 
-  dataClassName: 
-  speedScalar: 1
+  dataClassName: Grandma.GroundMovement2DData
+  speedScalar: 5

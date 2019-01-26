@@ -10,6 +10,7 @@ public class SwitchAbility : Ability
 
     public override bool WillActivate()
     {
+        //INPUT
         return base.WillActivate() && Input.GetMouseButtonDown(0) && positionable != null;
     }
 

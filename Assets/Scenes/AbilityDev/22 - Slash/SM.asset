@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: PlayerPositionable
-  m_EditorClassIdentifier: Assembly-CSharp:Grandma:PositionableData
+  m_Name: SM
+  m_EditorClassIdentifier: Assembly-CSharp:Grandma.Core:ShootManagerData
   associatedObjID: 
-  dataClassName: Grandma.PositionableData
-  position: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0}
-  localScale: {x: 1, y: 1, z: 1}
+  dataClassName: Grandma.Core.ShootManagerData
+  backSpeed: 40
+  forwardSpeed: 20
+  ammoCapacity: 1
+  timeUntilDestroy: 5
+  bulletPrefab: {fileID: 2514789200188597181, guid: 3333dc4fd9d3a480ea22f3d47e779be6,
+    type: 3}
