@@ -5,24 +5,15 @@ namespace Grandma
 {
     public class AbilityManager : MonoBehaviour
     {
-        public List<Ability> startingAbilities;
-
-        private List<Ability> abilities = new List<Ability>();
+        [SerializeField]
+        public List<Ability> Abilities;
 
         private Ability curr;
-
-        private void Awake()
-        {
-            if(startingAbilities != null)
-            {
-                abilities.AddRange(startingAbilities);
-            }
-        }
 
         private void Update()
         {
             //Poll for input
-            abilities.ForEach(x =>
+            Abilities.ForEach(x =>
             {
                 if (Input.GetKeyDown(x.enteringKey))
                 {

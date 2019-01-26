@@ -15,6 +15,7 @@ namespace Grandma
     public interface IGrandmaModifiable { }
 
     [Serializable]
+    [CreateAssetMenu(menuName = "Core/Grandma Component Data")]
     public class GrandmaComponentData : ScriptableObject, IGrandmaModifiable
     {
         [HideInInspector]
