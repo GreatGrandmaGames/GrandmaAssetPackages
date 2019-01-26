@@ -27,7 +27,7 @@ namespace Grandma
         public MoveController StartingController;
 
         public MoveController ActiveController { get; private set; }
-        public LockDown ChangeMovementLock { get; private set; }
+        public LockDown ChangeMovementLock { get; private set; } = new LockDown();
 
         protected override void Awake()
         {
