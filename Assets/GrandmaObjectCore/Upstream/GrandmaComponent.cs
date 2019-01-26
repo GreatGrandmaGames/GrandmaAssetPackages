@@ -11,6 +11,7 @@ namespace Grandma
     {
         public GrandmaObject Base { get; private set; }
 
+        [Header("Data Options")]
         [Tooltip("Should this component use the canonical Scriptable Object or create an instance for its own use?")]
         public bool duplicateData = true;
 
@@ -57,8 +58,7 @@ namespace Grandma
                 {
                     Data = Data.Clone();
 
-                    Debug.Log("GComp: Clone " + Data.SerializeJSON());
-
+                    //Debug.Log("GComp: Clone " + Data.SerializeJSON());
                 }
 
                 Read(Data);
