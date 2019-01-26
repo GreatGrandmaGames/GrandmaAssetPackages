@@ -10,13 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: MovementData
-  m_EditorClassIdentifier: Assembly-CSharp:Grandma:SidescrollerMovementData
-  componentID: 3f6371c1-e78a-45ce-baa4-0c041202c428
+  m_Name: Patrol
+  m_EditorClassIdentifier: Assembly-CSharp:Grandma:PositionableData
+  componentID: 
   associatedObjID: 
-  dataClassName: Grandma.SidescrollerMovementData
-  speedScalar: 300
-  jumpForce: 100
-  canJump: 1
-  maxSpeed: 5
-  numberOfJumps: 2
+  dataClassName: 
+  position: {x: 0, y: 0, z: 0}
+  rotation: {x: 0, y: 0, z: 0}
+  localScale: {x: 1, y: 1, z: 1}
