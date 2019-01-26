@@ -15,7 +15,7 @@ namespace Grandma
     {
         public KeyCode enteringKey;
 
-        public CoolDown CoolDown { get; private set; } = new CoolDown();
+        public Timer CoolDown { get; private set; } = new Timer();
 
         protected override void OnRead(GrandmaComponentData data)
         {
@@ -31,7 +31,7 @@ namespace Grandma
 
         public virtual bool CanEnter()
         {
-            return CoolDown.IsCooling == false;
+            return CoolDown.IsCounting == false;
         }
 
         /// <summary>

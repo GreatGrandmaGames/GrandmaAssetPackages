@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace Grandma 
 {
-    public class CoolDown
+    public class Timer
     {
         public float time;
 
-        public bool IsCooling { get; private set; }
+        public bool IsCounting { get; private set; }
 
         /// <summary>
         /// Returns percentage complete
@@ -17,14 +17,24 @@ namespace Grandma
         public Action<float> OnCoolingDown;
         public Action OnFinished;
 
+        private Coroutine coroutine;
+
         public void Begin()
         {
-            CoroutineDispatcher.Instance.StartCoroutine(CoolDownCo());
+            coroutine = CoroutineDispatcher.Instance.StartCoroutine(CoolDownCo());
+        }
+
+        public void Cancel()
+        {
+            if(coroutine != null)
+            {
+                CoroutineDispatcher.Instance.StopCoroutine(coroutine);
+            }
         }
 
         IEnumerator CoolDownCo()
         {
-            IsCooling = true;
+            IsCounting = true;
 
             float timer = 0f;
 
@@ -37,7 +47,7 @@ namespace Grandma
                 yield return null;
             }
 
-            IsCooling = false;
+            IsCounting = false;
 
             OnFinished?.Invoke();
         }

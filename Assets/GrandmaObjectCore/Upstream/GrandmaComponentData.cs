@@ -18,6 +18,8 @@ namespace Grandma
     public class GrandmaComponentData : ScriptableObject, IGrandmaModifiable
     {
         [HideInInspector]
+        public string componentID;
+        [HideInInspector]
         public string associatedObjID;
         [HideInInspector]
         public string dataClassName;
@@ -34,6 +36,7 @@ namespace Grandma
         public void Init()
         {
             this.dataClassName = this.GetType().ToString();
+            this.componentID = Guid.NewGuid().ToString();
         }
 
         #region Modifiers

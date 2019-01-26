@@ -128,13 +128,13 @@ namespace Grandma.ParametricFirearms
         {
             CurrentState = State.Intercepting;
 
-            moveable.Active.CanMove = true;
+            moveable.ActiveController.CanMove = true;
 
 
             while (TargetInSight(d) == false || TargetInRange(d.transform) == false)
             {
 
-                if (moveable.Active is MoveToVector vecMove)
+                if (moveable.ActiveController is MoveToVector vecMove)
                 {
                     vecMove.Target = d.transform.position;
                 }
@@ -163,7 +163,7 @@ namespace Grandma.ParametricFirearms
         {
             CurrentState = State.Firing;
 
-            moveable.Active.CanMove = false;
+            moveable.ActiveController.CanMove = false;
 
             var aim = StartCoroutine(Aim(d.transform));
 

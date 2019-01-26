@@ -26,7 +26,8 @@ namespace Grandma
         //Calls SwitchMode for this controller on Start
         public MoveController StartingController;
 
-        public MoveController Active { get; private set; }
+        public MoveController ActiveController { get; private set; }
+        public LockDown ChangeMovementLock { get; private set; }
 
         protected override void Awake()
         {
@@ -35,25 +36,39 @@ namespace Grandma
             SwitchMode(StartingController);
         }
 
+        public void EnableMovement(bool enabled)
+        {
+            if (ChangeMovementLock.IsUnlocked)
+            {
+                if (ActiveController != null)
+                {
+                    if (enabled)
+                    {
+                        ActiveController.Activate();
+                    } else
+                    {
+                        ActiveController.Deactivate();
+                    }
+                }
+            }
+        }
+
         //Can be null - no movement system will be active
         public void SwitchMode(MoveController switchTo)
-        { 
-            if (Active != null)
+        {
+            if (ChangeMovementLock.IsUnlocked)
             {
-                Active.Deactivate();
-            }
+                EnableMovement(false);
 
-            //Lazy add
-            if (AllModes.Contains(switchTo) == false)
-            {
-                AllModes.Add(switchTo);
-            }
+                //Lazy add
+                if (AllModes.Contains(switchTo) == false)
+                {
+                    AllModes.Add(switchTo);
+                }
 
-            Active = switchTo;
+                ActiveController = switchTo;
 
-            if (Active != null)
-            {
-                Active.Activate();
+                EnableMovement(true);
             }
         }
 
@@ -67,7 +82,7 @@ namespace Grandma
                 return;
             }
 
-            int currIndex = allModes.FindIndex(x => x == Active);
+            int currIndex = allModes.FindIndex(x => x == ActiveController);
             SwitchMode(AllModes[(currIndex + 1) % AllModes.Count]);
         }
     }

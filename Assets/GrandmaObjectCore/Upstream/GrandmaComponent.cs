@@ -29,6 +29,14 @@ namespace Grandma
             }
         }
 
+        public string ComponentID
+        {
+            get
+            {
+                return Data.componentID;
+            }
+        }
+
         protected virtual void Awake()
         {
             Base = GetComponent<GrandmaObject>();
