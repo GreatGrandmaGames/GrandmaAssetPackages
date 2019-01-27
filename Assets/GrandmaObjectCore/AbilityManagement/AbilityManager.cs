@@ -15,7 +15,7 @@ namespace Grandma
             //Poll for input
             Abilities.ForEach(x =>
             {
-                if (Input.GetKeyDown(x.enteringKey))
+                if (Input.GetButtonDown(x.enteringKey))
                 {
                     //Ability switched without firing - cancel
                     if (curr != null)

@@ -56,6 +56,7 @@ namespace Grandma
             if (this.damageData.currentHealth <= 0)
             {
                 OnDestroyed?.Invoke();
+                LevelManager.Instance.Reload();
             }
 
             Write();

@@ -23,7 +23,7 @@ namespace Grandma
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            collision.collider?.GetComponent<Damageable>()?.Damage(new DamageablePayload()
+            collision.gameObject?.GetComponent<Damageable>()?.Damage(new DamageablePayload()
             {
                 agentID = ObjectID,
                 amount = docData.amount
