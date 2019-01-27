@@ -8,15 +8,15 @@ namespace Grandma
     /// <summary>
     /// Triggered by collider
     /// </summary>
-    public abstract class Interactable : MonoBehaviour
+    public abstract class Interactable : GrandmaComponent
     {
         private Collider2D triggerCol;
 
         protected abstract void OnTriggered(string triggeringID);
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            var agent = collision.collider?.GetComponent<Agent>();
+            var agent = collision?.GetComponentInParent<Agent>();
 
             if (agent != null)
             {

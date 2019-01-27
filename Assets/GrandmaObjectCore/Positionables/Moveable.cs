@@ -44,8 +44,6 @@ namespace Grandma
                 {
                     if (enabled)
                     {
-                        Debug.Log(ActiveController.GetType());
-
                         ActiveController.Activate();
                     } else
                     {

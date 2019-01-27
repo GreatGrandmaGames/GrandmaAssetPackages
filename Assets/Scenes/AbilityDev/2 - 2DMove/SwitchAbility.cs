@@ -22,15 +22,15 @@ public class SwitchAbility : Ability
         {
             var otherPos = other.transform.position;
             var otherRot = other.transform.rotation;
-            var otherLS = other.transform.localScale;
+            //var otherLS = other.transform.localScale;
 
             other.transform.position = positionable.transform.position;
             other.transform.rotation = positionable.transform.rotation;
-            other.transform.localScale = positionable.transform.localScale;
+            //other.transform.localScale = positionable.transform.localScale;
 
             positionable.transform.position = otherPos;
             positionable.transform.rotation = otherRot;
-            positionable.transform.localScale = otherLS;
+            //positionable.transform.localScale = otherLS;
         }
     }
 }

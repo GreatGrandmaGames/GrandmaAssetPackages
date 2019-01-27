@@ -77,13 +77,18 @@ namespace Grandma
             return allObjects.SingleOrDefault(x => x.Data.id == id);
         }
 
-        public T GetComponentByID<T>(string id) where T : GrandmaComponent
+        public T GetComponentByObjectID<T>(string id) where T : GrandmaComponent
         {
             return GetComponentByID(id, typeof(T)) as T;
         }
 
         public GrandmaComponent GetComponentByID(string id, Type componentType)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
+
             if (componentType.IsSubclassOf(typeof(GrandmaComponent)) == false)
             {
                 //Not a grandmaable component
