@@ -7,6 +7,25 @@ using Grandma;
 public class SwitchAbility : Ability
 {
     public Positionable positionable;
+    [HideInInspector] private GameObject cursorPrefab;
+
+    private GameObject cursor;
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        if(cursor != null)
+        {
+
+        }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+    }
 
     public override bool WillActivate()
     {
