@@ -11,6 +11,8 @@ namespace Grandma
         public void Start()
         {
             ability.CoolDown.OnCountingDown += SetValue;
+
+            ability.CoolDown.OnFinished += () => { SetValue(1); };
         }
     }
 }
