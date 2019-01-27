@@ -10,9 +10,9 @@ public class AbilityTest : MonoBehaviour
 
     private void Start()
     {
-        am.startingAbilities.ForEach(x =>
+        am.Abilities.ForEach(x =>
         {
-            x.CoolDown.OnCoolingDown += (perc) =>
+            x.CoolDown.OnCountingDown += (perc) =>
             {
                 //Debug.Log(x.name + " is cooling down " + perc);
             };

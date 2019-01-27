@@ -81,7 +81,7 @@ public class Boomerang : GrandmaComponent
 
     private IEnumerator PollForRecall()
     {
-        while(Input.GetKeyDown(KeyCode.R) == false)
+        while(Input.GetButtonDown("Fire2") == false)
         {
             yield return null;
         }

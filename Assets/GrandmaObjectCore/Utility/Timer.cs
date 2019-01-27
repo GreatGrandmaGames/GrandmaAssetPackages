@@ -14,7 +14,7 @@ namespace Grandma
         /// <summary>
         /// Returns percentage complete
         /// </summary>
-        public Action<float> OnCoolingDown;
+        public Action<float> OnCountingDown;
         public Action OnFinished;
 
         private Coroutine coroutine;
@@ -40,7 +40,7 @@ namespace Grandma
 
             while(timer < time)
             {
-                OnCoolingDown?.Invoke(timer / time);
+                OnCountingDown?.Invoke(timer / time);
 
                 timer += Time.deltaTime;
 

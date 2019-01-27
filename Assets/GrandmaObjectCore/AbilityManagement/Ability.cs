@@ -13,7 +13,7 @@ namespace Grandma
 
     public abstract class Ability : GrandmaComponent
     {
-        public KeyCode enteringKey;
+        public string enteringKey;
 
         public Timer CoolDown { get; private set; } = new Timer();
 
