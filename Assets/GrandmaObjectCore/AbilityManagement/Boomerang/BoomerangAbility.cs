@@ -7,10 +7,15 @@ public class BoomerangAbility : Ability
 {
     public GameObject boomerangPrefab;
     public Transform returnTransform;
+
     public override void Activate()
     {
-
         GameObject b = Instantiate(boomerangPrefab);
         b.GetComponent<Boomerang>().Fire(returnTransform);
+    }
+
+    public override bool CanEnter()
+    {
+        return base.CanEnter() && AbilityManager.Instance.AbilityStaged == false;
     }
 }
