@@ -148,7 +148,8 @@ MonoBehaviour:
   dataClassName: PFData
   useConventionalDataClass: 0
   writeBeforeInitialRead: 0
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 1368554320738997869, guid: 80c7d5b06e132de449d7af225e9e61c2,
+    type: 3}
   barrelTip: {fileID: 1349307893}
   OnTriggerPressed:
     m_PersistentCalls:

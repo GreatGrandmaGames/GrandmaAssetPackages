@@ -4,13 +4,6 @@ using UnityEngine;
 
 namespace Grandma.ParametricFirearms
 {
-
-    [Serializable]
-    public class PFAIData : AgentData
-    {
-        public float firingMoveSpeedFactor;
-    }
-
     [RequireComponent(typeof(Moveable))]
     public class PFAI : Agent
     {

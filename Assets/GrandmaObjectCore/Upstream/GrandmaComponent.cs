@@ -11,14 +11,18 @@ namespace Grandma
     {
         [Header("Initial Data Options")]
         public GrandmaComponentData initialData;
+        [Tooltip("The name of the data class to instance")]
         public string dataClassName;
+        [Tooltip("Should the dataClassName include this class' namespace?")]
+        public bool appendNameSpace = true;
+        [Tooltip("Should we create a data class named {this type} + \"Data\"")]
         public bool useConventionalDataClass = true;
         [Tooltip("Should this component consider the initial state of the object?")]
         //IE a positionable in the scene will already have meaningful data before runtime
         public bool writeBeforeInitialRead = false;
 
         //Private Variables
-        public GrandmaComponentData Data { get; private set; }
+        public virtual GrandmaComponentData Data { get; protected set; }
 
         //Events
         /// <summary>
@@ -79,14 +83,11 @@ namespace Grandma
                 return Instantiate(initialData);
             }
 
-            Debug.Log(dataClassName);
+            var suppliedStringData = CreateFromSuppliedString();
 
-            //Use data class name. If that's null, and we want to use the convention, return convention
-            var classNameData = CreateInitialData(dataClassName);
-            
-            if(classNameData != null)
+            if (suppliedStringData != null)
             {
-                return classNameData;
+                return suppliedStringData;
             }
             else if(useConventionalDataClass)
             {
@@ -94,8 +95,26 @@ namespace Grandma
             }
             else
             {
+                Debug.LogError("GrandmaComponent " + GetType().Name + " on " + name + ": Please provide a way to initialise data");
                 return null;
             }
+        }
+
+        private GrandmaComponentData CreateFromSuppliedString()
+        {
+            if (string.IsNullOrEmpty(dataClassName))
+            {
+                return null;
+            }
+
+            string n = dataClassName;
+
+            if (appendNameSpace)
+            {
+                n.Insert(0, GetType().Namespace + ".");
+            }
+
+            return CreateInitialData(n);
         }
 
         private GrandmaComponentData CreateInitialData(string name)
