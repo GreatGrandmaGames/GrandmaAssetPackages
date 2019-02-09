@@ -85,7 +85,7 @@ namespace Grandma
                 header.subData.Add(gableObj.GetType().ToString());
 
                 fileString += "\n";
-                fileString += gableObj.WriteToJSON();
+                fileString += gableObj.Data.SerializeJSON();
             }
 
             var finalString = JsonUtility.ToJson(header) + "\n" + fileString;
