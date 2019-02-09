@@ -17,14 +17,17 @@ public class SwitchAbility : Ability
 
         if(cursor != null)
         {
-
+            cursor = Instantiate(cursorPrefab);
         }
+
+        cursor.SetActive(true);
     }
 
     public override void Exit()
     {
         base.Exit();
 
+        cursor.SetActive(false);
     }
 
     public override bool WillActivate()

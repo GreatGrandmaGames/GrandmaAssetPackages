@@ -9,18 +9,25 @@ namespace Grandma
     [RequireComponent(typeof(GrandmaObject))]
     public abstract class GrandmaComponent : MonoBehaviour
     {
-        public GrandmaObject Base { get; private set; }
+        [Header("Initial Data Options")]
+        public GrandmaComponentData initialData;
+        public string dataClassName;
+        public bool useConventionalDataClass = true;
+        [Tooltip("Should this component consider the initial state of the object?")]
+        //IE a positionable in the scene will already have meaningful data before runtime
+        public bool writeBeforeInitialRead = false;
 
-        //[Header("Data Options")]
-        //[Tooltip("Should this component use the canonical Scriptable Object or create an instance for its own use?")]
-        //public bool duplicateData = true;
+        //Private Variables
+        public GrandmaComponentData Data { get; private set; }
 
-        public GrandmaComponentData Data;
-
+        //Events
         /// <summary>
         /// Called when some data field has been updated
         /// </summary>
         public Action<GrandmaComponent> OnUpdated;
+
+        //Properties
+        public GrandmaObject Base { get; private set; }
 
         public string ObjectID
         {
@@ -38,6 +45,7 @@ namespace Grandma
             }
         }
 
+        #region Data Initialisation
         protected virtual void Awake()
         {
             Base = GetComponent<GrandmaObject>();
@@ -52,15 +60,60 @@ namespace Grandma
                 Base.RegisterWithManager();
             }
 
-            if (Data != null)
+            if (writeBeforeInitialRead)
             {
-                Read(Instantiate(Data));
+                Data = CreateInitialData();
+
+                Refresh();
+            }
+            else
+            {
+                Read(CreateInitialData());
             }
         }
 
+        private GrandmaComponentData CreateInitialData()
+        {
+            if (initialData != null)
+            {
+                return Instantiate(initialData);
+            }
+
+            if(string.IsNullOrEmpty(dataClassName) == false)
+            {
+                var data = ScriptableObject.CreateInstance(this.GetType().Name + "Data") as GrandmaComponentData;
+
+                if (data != null)
+                {
+                    return data;
+                }
+                else
+                {
+                    Debug.LogError("GrandmaComponent " + GetType() + " on " + name + ": Could not initialise data from provided name " + dataClassName);
+                }
+            }
+
+            if (useConventionalDataClass)
+            {
+                var data = ScriptableObject.CreateInstance(this.GetType().Name + "Data") as GrandmaComponentData;
+
+                if(data != null)
+                {
+                    return data; 
+                }
+                else
+                {
+                    Debug.LogError("GrandmaComponent " + GetType() + " on " + name + ": Could not initialise data from conventional name");
+                }
+            }
+
+            return null;
+        }
+        #endregion
+
         protected virtual void Start() { }
 
-        #region Read
+        #region Read / Write
         /// <summary>
         /// Set component state from some provided data
         /// </summary>
@@ -76,36 +129,26 @@ namespace Grandma
 
             OnRead(data);
 
-            if(OnUpdated != null)
-            {
-                OnUpdated(this);
-            }
+            OnUpdated?.Invoke(this);
         }
 
-        protected virtual void OnRead(GrandmaComponentData data) { }
-        #endregion
-
-        #region Write
-        /// <summary>
-        /// Produce a JSON representation of this component
-        /// </summary>
-        /// <returns></returns>
-        public string WriteToJSON()
+        protected void Refresh()
         {
-            if (ValidateState() == false)
-            {
-                Debug.LogWarning("GrandmaComponent: Cannot Write as Data is invalid");
-                return null;
-            }
+            Write();
 
-            //Give the component an opportunity to reach out and update any fields it needs to before write
-            OnWrite();
-
-            return Data.SerializeJSON();
+            Read(Data);
         }
 
-        //Helper - alert that data has changed
-        protected virtual void Write()
+        /// <summary>
+        /// The component should update values based on new Data
+        /// </summary>
+        /// <param name="data"></param>
+        protected virtual void OnRead(GrandmaComponentData data) { }
+
+        /// <summary>
+        /// Updates the Data based on the current object state
+        /// </summary>
+        public void Write()
         {
             if (ValidateState() == false)
             {
@@ -113,10 +156,10 @@ namespace Grandma
                 return;
             }
 
+            //Ensure ID is set correctly
             Data.associatedObjID = Base.Data.id;
 
-            //Update based on new Data
-            Read(Data);
+            OnWrite();
         }
 
         /// <summary>
