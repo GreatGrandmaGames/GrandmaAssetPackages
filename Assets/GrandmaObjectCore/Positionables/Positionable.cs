@@ -32,9 +32,9 @@ namespace Grandma
 
             if(posData != null)
             {
-                transform.position = posData.position;
-                transform.rotation = Quaternion.Euler(posData.rotation);
-                transform.localScale = posData.localScale;
+                //transform.position = posData.position;
+                //transform.rotation = Quaternion.Euler(posData.rotation);
+                //transform.localScale = posData.localScale;
             }
         }
 
@@ -42,7 +42,7 @@ namespace Grandma
         {
             base.OnWrite();
 
-            posData.SetFromTransform(transform);
+            //posData.SetFromTransform(transform);
         }
     }
 }

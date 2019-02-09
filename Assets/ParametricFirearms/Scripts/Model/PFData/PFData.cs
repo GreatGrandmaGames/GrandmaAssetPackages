@@ -30,7 +30,7 @@ namespace Grandma.ParametricFirearms
         [SerializeField]
         public PFChargeTimeData ChargeTime;
 
-        void Awake()
+        /*void Awake()
         {
             this.Meta = new PFMetaData();
             this.Dynamic = new PFDynamicData();
@@ -40,7 +40,7 @@ namespace Grandma.ParametricFirearms
             this.RateOfFire = new PFRateOfFireData();
             this.Multishot = new PFMultishotData();
             this.ChargeTime = new PFChargeTimeData();
-        }
+        }*/
     }
 
     /// <summary>

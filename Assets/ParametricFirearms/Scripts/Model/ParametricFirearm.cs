@@ -95,6 +95,7 @@ namespace Grandma.ParametricFirearms
         private Coroutine coolDownCoroutine;
         #endregion
 
+
         #region Events
         [Header("Events")]
         public PFEvent OnTriggerPressed;

@@ -31,8 +31,8 @@ namespace Grandma.ParametricFirearms
             base.Awake();
 
             rb = GetComponent<Rigidbody>();
-            rb.useGravity = false;
-
+            //thisisterrible
+            Physics.IgnoreCollision(GetComponent<Collider>(), GameObject.FindGameObjectWithTag("PlayerHitbox").GetComponent<Collider>());
             //Clean up
             Destroy(gameObject, 5f);
         }
@@ -80,6 +80,7 @@ namespace Grandma.ParametricFirearms
 
         private void OnCollisionEnter(Collision collision)
         {
+
             numberOfCollisions++;
 
             var hitMax = numberOfCollisions >= projData.AreaDamage.numImpactsToDetonate;

@@ -7,8 +7,11 @@ namespace Grandma
     [CreateAssetMenu(menuName = "Core/ZeroGMovementData")]
     public class ZeroGMovementData: PositionableData
     {
+        [SerializeField]
         public float drag;
+        [SerializeField]
         public float angularDrag;
+        [SerializeField]
         public float thrust;
     }
 
@@ -32,7 +35,8 @@ namespace Grandma
         private float originalDrag;
         private float originalAngularDrag;
         public override void Activate()
-        { 
+        {
+            base.Activate();
             rb.useGravity = false;
             originalDrag = rb.drag;
             originalAngularDrag = rb.angularDrag;
@@ -42,9 +46,11 @@ namespace Grandma
                 rb.drag = zeroGMovementData.drag;
                 rb.angularDrag = zeroGMovementData.angularDrag;
             }
+
         }
         public override void Deactivate()
         {
+            base.Deactivate();
             rb.drag = originalDrag;
             rb.angularDrag = originalAngularDrag;
             rb.useGravity = true;
@@ -63,6 +69,7 @@ namespace Grandma
 
             //calculate velocity
             Vector3 newVelocity = (moveHorizontal + moveVertical + moveUp).normalized * zeroGMovementData.thrust;
+
             return newVelocity;
         }
 

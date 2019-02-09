@@ -50,7 +50,6 @@ namespace Grandma
                 Debug.LogWarning("Damageable: Cannot Damage as Data is not valid");
                 return;
             }
-
             this.damageData.currentHealth -= payload.amount;
             //TODO add flag to DamageableData
             if (this.damageData.currentHealth <= 0)

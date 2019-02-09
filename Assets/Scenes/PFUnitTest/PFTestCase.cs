@@ -82,8 +82,8 @@ public class PFTestCase : MonoBehaviour
             Debug.Log(testPF);
         };
 
-        GetComponent<PlayerPFController>().inventory.Add(testPF);
-        GetComponent<PlayerPFController>().ScrollToNextWeapon();
+       //GetComponent<PlayerPFController>().inventory.Add(testPF);
+      //GetComponent<PlayerPFController>().ScrollToNextWeapon();
     }
 }
 
