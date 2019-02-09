@@ -79,35 +79,45 @@ namespace Grandma
                 return Instantiate(initialData);
             }
 
-            if(string.IsNullOrEmpty(dataClassName) == false)
-            {
-                var data = ScriptableObject.CreateInstance(this.GetType().Name + "Data") as GrandmaComponentData;
+            Debug.Log(dataClassName);
 
-                if (data != null)
-                {
-                    return data;
-                }
-                else
-                {
-                    Debug.LogError("GrandmaComponent " + GetType() + " on " + name + ": Could not initialise data from provided name " + dataClassName);
-                }
+            //Use data class name. If that's null, and we want to use the convention, return convention
+            var classNameData = CreateInitialData(dataClassName);
+            
+            if(classNameData != null)
+            {
+                return classNameData;
+            }
+            else if(useConventionalDataClass)
+            {
+                return CreateInitialData(GetType() + "Data");
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private GrandmaComponentData CreateInitialData(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return null;
             }
 
-            if (useConventionalDataClass)
+            Debug.Log(name);
+
+            var data = ScriptableObject.CreateInstance(name) as GrandmaComponentData;
+
+            if (data != null)
             {
-                var data = ScriptableObject.CreateInstance(this.GetType().Name + "Data") as GrandmaComponentData;
-
-                if(data != null)
-                {
-                    return data; 
-                }
-                else
-                {
-                    Debug.LogError("GrandmaComponent " + GetType() + " on " + name + ": Could not initialise data from conventional name");
-                }
+                return data;
             }
-
-            return null;
+            else
+            {
+                Debug.LogError("GrandmaComponent " + GetType() + " on " + this.name + ": Could not initialise data with name " + name);
+                return null;
+            }
         }
         #endregion
 
@@ -122,6 +132,7 @@ namespace Grandma
         {
             if(data == null)
             {
+                Debug.LogError("GrandmaComponent " + GetType() + " on " + name + " has been passed null data");
                 return;
             } 
 

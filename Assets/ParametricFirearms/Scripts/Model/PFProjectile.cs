@@ -12,6 +12,9 @@ namespace Grandma.ParametricFirearms
     [RequireComponent(typeof(Rigidbody))]
     public class PFProjectile : GrandmaComponent
     {
+        [Header("Projectile Options")]
+        public float cleanUpTime = 5f;
+
         //Calculated properties
         private float timeSinceCreation = 0.0f;
         private float distanceTravelled = 0.0f;
@@ -31,10 +34,9 @@ namespace Grandma.ParametricFirearms
             base.Awake();
 
             rb = GetComponent<Rigidbody>();
-            //thisisterrible
-            Physics.IgnoreCollision(GetComponent<Collider>(), GameObject.FindGameObjectWithTag("PlayerHitbox").GetComponent<Collider>());
+            
             //Clean up
-            Destroy(gameObject, 5f);
+            Destroy(gameObject, cleanUpTime);
         }
 
         public void Launch(Agent agent, ParametricFirearm pf, PFProjectileData data)
@@ -80,7 +82,6 @@ namespace Grandma.ParametricFirearms
 
         private void OnCollisionEnter(Collision collision)
         {
-
             numberOfCollisions++;
 
             var hitMax = numberOfCollisions >= projData.AreaDamage.numImpactsToDetonate;

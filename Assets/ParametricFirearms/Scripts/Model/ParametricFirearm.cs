@@ -8,6 +8,7 @@ namespace Grandma.ParametricFirearms
 {
     public class ParametricFirearm : AgentItem
     {
+        [Header("Parametric Firearm Options")]
         public PFProjectile projectilePrefab;
         
         [Tooltip("Where the projectile will spawn from and its initial direction (z-axis)")]
