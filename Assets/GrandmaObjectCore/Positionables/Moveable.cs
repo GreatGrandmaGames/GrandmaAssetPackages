@@ -87,13 +87,13 @@ namespace Grandma
             SwitchMode(AllModes[(currIndex + 1) % AllModes.Count]);
         }
 
-        private void Update()
+        /*private void Update()
         {
             if (Input.GetKeyDown(switchCode))
             {
                 NextMode();
             }
-        }
+        }*/
     }
     
 }

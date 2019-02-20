@@ -3,24 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using Grandma;
 
-
-
 public class JumpAbility : Ability
 {
     // Start is called before the first frame update
-    Rigidbody rb;
+    public Rigidbody rb;
     public float jumpForce;
-
     protected override void Awake()
     {
         base.Awake();
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     public override bool WillActivate()
     {
-        return base.WillActivate() && Input.GetButtonDown("Jump");
+        return base.WillActivate() && Input.GetButtonDown(enteringKey);
     }
 
     public void Jump(Rigidbody rb)

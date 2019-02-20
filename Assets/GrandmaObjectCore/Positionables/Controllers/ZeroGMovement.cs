@@ -43,6 +43,7 @@ namespace Grandma
             rb.drag = originalDrag;
             rb.angularDrag = originalAngularDrag;
             rb.useGravity = true;
+            rb.velocity = Vector3.zero;
         }
 
         protected override Vector3 CalculateVelocityWithInput(Vector3 InputVector)

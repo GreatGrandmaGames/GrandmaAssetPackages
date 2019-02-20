@@ -4,13 +4,6 @@ using UnityEngine;
 
 namespace Grandma
 {
-    [Serializable]
-    [CreateAssetMenu(menuName = "Core/Ability Data")]
-    public class AbilityData : GrandmaComponentData
-    {
-        public float coolDownTime;
-    }
-
     public abstract class Ability : GrandmaComponent
     {
         public string enteringKey;
