@@ -4,15 +4,6 @@ using UnityEngine;
 
 namespace Grandma
 {
-    [CreateAssetMenu(menuName = "Core/GroundMovementData")]
-    public class GroundMovementData : PositionableData
-    {
-        [SerializeField]
-        public float speedScalar;
-        [SerializeField]
-        public float jumpForce;
-    }
-
     //the basic ground movement for FPS
     public class GroundMovement : RBMove
     {

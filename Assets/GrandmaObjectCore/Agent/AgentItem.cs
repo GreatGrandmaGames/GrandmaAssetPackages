@@ -3,12 +3,6 @@ using UnityEngine;
 
 namespace Grandma
 {
-    [Serializable]
-    public class AgentItemData : GrandmaComponentData
-    {
-        [HideInInspector]
-        public string agentID;
-    }
 
     /// <summary>
     /// An item that can be used by an agent

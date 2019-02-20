@@ -4,13 +4,6 @@ using UnityEngine;
 
 namespace Grandma
 {
-    [SerializeField]
-    [CreateAssetMenu(menuName = "Core/Key Data")]
-    public class KeyData : GrandmaComponentData
-    {
-        public string doorID;
-    }
-
     public class Key : Interactable
     {
         public Door startingDoor;

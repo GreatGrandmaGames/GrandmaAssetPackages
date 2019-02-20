@@ -5,7 +5,6 @@ namespace Grandma
 { 
     public class Moveable : Positionable
     {
-
         public KeyCode switchCode;
         //MoveControllers can be set via inspector. Do not initialise a new list here
         //or the inspector fields will be wiped!
