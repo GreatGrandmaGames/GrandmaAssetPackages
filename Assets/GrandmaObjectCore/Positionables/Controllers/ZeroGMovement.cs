@@ -1,20 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 namespace Grandma
 {
-    [CreateAssetMenu(menuName = "Core/ZeroGMovementData")]
-    public class ZeroGMovementData: PositionableData
-    {
-        [SerializeField]
-        public float drag;
-        [SerializeField]
-        public float angularDrag;
-        [SerializeField]
-        public float thrust;
-    }
-
     //basic zeroG movement for 
     public class ZeroGMovement : RBMove
     {
@@ -54,6 +43,7 @@ namespace Grandma
             rb.drag = originalDrag;
             rb.angularDrag = originalAngularDrag;
             rb.useGravity = true;
+            rb.velocity = Vector3.zero;
         }
 
         protected override Vector3 CalculateVelocityWithInput(Vector3 InputVector)

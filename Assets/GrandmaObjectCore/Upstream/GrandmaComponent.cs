@@ -124,7 +124,6 @@ namespace Grandma
                 return null;
             }
 
-            Debug.Log(name);
 
             var data = ScriptableObject.CreateInstance(name) as GrandmaComponentData;
 
