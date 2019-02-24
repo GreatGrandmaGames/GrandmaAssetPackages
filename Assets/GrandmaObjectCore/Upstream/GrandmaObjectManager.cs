@@ -8,22 +8,22 @@ namespace Grandma
     public class GrandmaObjectManager : MonoBehaviour
     {
         //Variables
-        private IDGenerator idGen;
         private List<GrandmaObject> allObjects = new List<GrandmaObject>();
 
         #region Singleton
-        public static GrandmaObjectManager Instance { get; private set; }
-        private void Awake()
+        private static GrandmaObjectManager instance;
+        public static GrandmaObjectManager Instance
         {
-            if (Instance != null)
+            get
             {
-                Debug.LogWarning("GrandmaObjectManager: Can only have one instance per scene. Destroying this...");
-                Destroy(this);
+                if(instance == null)
+                {
+                    var go = new GameObject("GrandmaObjectManager");
+                    instance = go.AddComponent<GrandmaObjectManager>();
+                }
+
+                return instance;
             }
-
-            Instance = this;
-
-            idGen = new IDGenerator();
         }
         #endregion
 
@@ -38,7 +38,7 @@ namespace Grandma
 
             allObjects.Add(gObj);
 
-            return new GrandmaObjectData(idGen.NewID(), gObj.name);
+            return new GrandmaObjectData(Guid.NewGuid().ToString(), gObj.name);
         }
 
         public void Unregister(GrandmaObject gObj)
@@ -61,7 +61,7 @@ namespace Grandma
         }
         #endregion
 
-        #region Object Retrival
+        #region Object & Component Retrival
         public List<GrandmaObject> AllObjects
         {
             get
@@ -72,38 +72,69 @@ namespace Grandma
             }
         }
         
-        public GrandmaObject GetByID(string id)
+        public GrandmaObject GetByObjectID(string id)
         {
             return allObjects.SingleOrDefault(x => x.Data.id == id);
         }
 
-        public T GetComponentByObjectID<T>(string id) where T : GrandmaComponent
+        public T GetComponentByID<T>(string componentID) where T : GrandmaComponent
         {
-            return GetComponentByID(id, typeof(T)) as T;
+            return GetComponentByID(componentID) as T;
         }
 
-        public GrandmaComponent GetComponentByID(string id, Type componentType)
+        public GrandmaComponent GetComponentByID(string componentID)
         {
-            if (string.IsNullOrEmpty(id))
+            foreach(var go in AllObjects)
+            {
+                var comp = go.GetComponentByID(componentID);
+
+                if(comp != null)
+                {
+                    return comp;
+                }
+            }
+
+            return null;
+        }
+
+        public T GetComponentByID<T>(string objectID, string componentID) where T : GrandmaComponent
+        {
+            return GetComponentByID(objectID, componentID) as T;
+        }
+
+        public GrandmaComponent GetComponentByID(string objectID, string componentID, Type componentType = null)
+        {
+            if (string.IsNullOrEmpty(objectID) || string.IsNullOrEmpty(componentID))
             {
                 return null;
             }
 
-            if (componentType.IsSubclassOf(typeof(GrandmaComponent)) == false)
+            return GetByObjectID(objectID)?.GetComponentByID(componentID);
+        }
+        #endregion
+
+        #region Object Creation
+        
+
+        public T CreateNewComponent<T>(GameObject obj = null) where T : GrandmaComponent
+        {
+            return CreateNewComponent(typeof(T), obj) as T;
+        }
+
+        public GrandmaComponent CreateNewComponent(Type t, GameObject obj = null)
+        {
+            if (t == null || t.IsSubclassOf(typeof(GrandmaComponent)) == false)
             {
-                //Not a grandmaable component
                 return null;
             }
 
-            var obj = GetByID(id);
+            obj = obj ?? new GameObject("[Grandma]" + t.Name);
 
-            if(obj != null)
-            {
-                return obj.GetComponent(componentType) as GrandmaComponent;
-            } else
-            {
-                return null;
-            }
+            GrandmaComponent comp = obj.AddComponent(t) as GrandmaComponent;
+
+            comp.Init();
+
+            return comp;
         }
         #endregion
     }

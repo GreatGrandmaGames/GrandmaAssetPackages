@@ -39,7 +39,7 @@ public class GrandmaObjectUnitTest : MonoBehaviour {
         Assert(string.IsNullOrEmpty(ps_withData_ID) == false, " PS With Data ID is set to " + ps_withData_ID);
 
         //Get by ID
-        var get_ps = GrandmaObjectManager.Instance.GetByID(ps_withData_ID);
+        var get_ps = GrandmaObjectManager.Instance.GetByObjectID(ps_withData_ID);
 
         Assert(get_ps == previouslySpawned_WithData, " Get By ID");
 

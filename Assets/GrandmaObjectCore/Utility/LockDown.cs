@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,8 +7,10 @@ namespace Grandma
     /// <summary>
     /// Allows other classes to enable / disable a component, without overlapping
     /// </summary>
+    [Serializable]
     public class LockDown
     {
+        [SerializeField]
         public List<string> lockingComponentIDs = new List<string>();
 
         public bool IsUnlocked

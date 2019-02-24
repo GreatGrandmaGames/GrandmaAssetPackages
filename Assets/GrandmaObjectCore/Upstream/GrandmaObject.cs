@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -152,6 +153,18 @@ namespace Grandma
             {
                 gComp.Read(data);
             }
+        }
+        #endregion
+
+        #region Component Retrival
+        public GrandmaComponent GetComponentByID(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
+
+            return GetComponents<GrandmaComponent>().FirstOrDefault(x => x.ComponentID == id);
         }
         #endregion
     }

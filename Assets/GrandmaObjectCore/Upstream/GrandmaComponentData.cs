@@ -29,12 +29,11 @@ namespace Grandma
         {
             get
             {
-                Init();
                 return Type.GetType(dataClassName)?.IsSubclassOf(typeof(GrandmaComponentData)) == true;
             }
         }
 
-        public void Init()
+        void Awake()
         {
             this.dataClassName = this.GetType().ToString();
             this.componentID = Guid.NewGuid().ToString();
@@ -177,17 +176,12 @@ namespace Grandma
         #region Serialisation / Deserialisation
         public string SerializeJSON()
         {
-            if(IsValid == false)
-            {
-                Init();
-            }
-
             return JsonUtility.ToJson(this);//JsonConvert.SerializeObject(this);
         }
 
         public static GrandmaComponentData DeserialiseJSON(string json, Type type)
         {
-            GrandmaComponentData newData = ScriptableObject.CreateInstance(type) as GrandmaComponentData;
+            GrandmaComponentData newData = CreateInstance(type) as GrandmaComponentData;
 
             JsonUtility.FromJsonOverwrite(json, newData);
 

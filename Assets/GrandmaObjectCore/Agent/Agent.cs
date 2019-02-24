@@ -34,7 +34,7 @@ namespace Grandma
 
             if (agentData != null)
             {
-                Faction = GrandmaObjectManager.Instance.GetComponentByObjectID<Faction>(agentData.factionID);
+                Faction = GrandmaObjectManager.Instance.GetComponentByID<Faction>(agentData.factionID);
             }
         }
 

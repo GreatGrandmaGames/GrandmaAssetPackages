@@ -40,7 +40,7 @@ namespace Grandma
 
             if (agentItemData != null)
             {
-                Agent = GrandmaObjectManager.Instance.GetComponentByObjectID<Agent>(agentItemData.agentID);
+                Agent = GrandmaObjectManager.Instance.GetComponentByID<Agent>(agentItemData.agentID);
             }
         }
 
