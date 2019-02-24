@@ -4,13 +4,6 @@ using UnityEngine;
 
 namespace Grandma
 {
-    [Serializable]
-    [CreateAssetMenu(menuName = "Core/DoorData")]
-    public class DoorData : GrandmaComponentData
-    {
-        public bool locked;
-    }
-
     public class Door : GrandmaComponent
     {
         [NonSerialized]
