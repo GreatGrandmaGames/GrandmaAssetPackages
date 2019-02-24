@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 namespace Grandma
@@ -9,17 +6,37 @@ namespace Grandma
     [RequireComponent(typeof(GrandmaObject))]
     public abstract class GrandmaComponent : MonoBehaviour
     {
-        [Header("Initial Data Options")]
+        public enum InitialDataMode
+        {
+            Convention,
+            Provide,
+            Named
+        }
+
+        [HideInInspector]
+        public InitialDataMode initialDataMode;
+
+        //Provide
+        [HideInInspector]
         public GrandmaComponentData initialData;
+
+        //Named
+        [HideInInspector]
         [Tooltip("The name of the data class to instance")]
         public string dataClassName;
+        [HideInInspector]
         [Tooltip("Should the dataClassName include this class' namespace?")]
         public bool appendNameSpace = true;
-        [Tooltip("Should we create a data class named {this type} + \"Data\"")]
-        public bool useConventionalDataClass = true;
+
+        [Header("Initial Data")]
+        [Tooltip("Should this component run its data initialisation straight away? (If this is created in the inspector, then yes!)")]
+        public bool initialiseOnAwake = false;
+
         [Tooltip("Should this component consider the initial state of the object?")]
         //IE a positionable in the scene will already have meaningful data before runtime
         public bool writeBeforeInitialRead = false;
+
+        private bool performedInitialisation = false;
 
         //Private Variables
         public virtual GrandmaComponentData Data { get; protected set; }
@@ -52,6 +69,25 @@ namespace Grandma
         #region Data Initialisation
         protected virtual void Awake()
         {
+            ObjectRegistration();
+
+            //If spawned in the inspector and no other manager will call its initialisation functions
+            if (initialiseOnAwake)
+            {
+                DataInitialisation();
+
+                InitialiseNewComponent();
+            }
+        }
+
+        protected virtual void Start() { }
+
+        /// <summary>
+        /// Registers this component with the GrandmaObject and, if necessary, the Manager. Always happens on Awake
+        /// </summary>
+        private void ObjectRegistration()
+        {
+            //Registration
             Base = GetComponent<GrandmaObject>();
 
             if (Base == null)
@@ -59,47 +95,82 @@ namespace Grandma
                 Base = gameObject.AddComponent<GrandmaObject>();
             }
 
-            if(Base.Data == null)
+            if (Base.Data == null)
             {
                 Base.RegisterWithManager();
             }
+        }
 
+        public void Init()
+        {
+            DataInitialisation();
+            InitialiseNewComponent();
+        }
+
+        /// <summary>
+        /// Creates some initial data for the Component. This should take place before the object is considered valid.
+        /// </summary>
+        // A flag can be set to call it in Awake, or it can be called manually (i.e. if you want to set variables before
+        // creation and delay data initialisation, this is possible.
+        private void DataInitialisation()
+        {
+            if(Data != null)
+            {
+                Debug.LogWarning("GrandmaComponent: Data Initialisation has already been called on " + GetType());
+                return;
+            }
+
+            //Initial data
+            switch (initialDataMode)
+            {
+                case InitialDataMode.Provide:
+                    Data = Instantiate(initialData);
+                    break;
+                case InitialDataMode.Named:
+                    Data = CreateFromSuppliedString();
+                    break;
+                case InitialDataMode.Convention:
+                    Data = CreateInitialData(GetType() + "Data");
+                    break;
+            }
+
+            if (Data == null)
+            {
+                Debug.LogError("GrandmaComponent: Initial Data Creation has failed. Removing this component.");
+                return;
+            }
+
+            //Initialise
             if (writeBeforeInitialRead)
             {
-                Data = CreateInitialData();
+                Write();
+            }
+
+            Read(Data);
+        }
+
+        /// <summary>
+        /// Create any related objects. Should only performed when / where the object is created
+        /// </summary>
+        //E.g. create any associated connections
+        private void InitialiseNewComponent()
+        {
+            //This method can only be called once
+            if (performedInitialisation == false)
+            {
+                performedInitialisation = true;
+
+                OnCreated();
 
                 Refresh();
-            }
-            else
-            {
-                Read(CreateInitialData());
-            }
+            } 
+
+            //else "GrandmaComponent: Component has already been initialised");
         }
 
-        private GrandmaComponentData CreateInitialData()
-        {
-            if (initialData != null)
-            {
-                return Instantiate(initialData);
-            }
+        protected virtual void OnCreated() { }
 
-            var suppliedStringData = CreateFromSuppliedString();
-
-            if (suppliedStringData != null)
-            {
-                return suppliedStringData;
-            }
-            else if(useConventionalDataClass)
-            {
-                return CreateInitialData(GetType() + "Data");
-            }
-            else
-            {
-                Debug.LogError("GrandmaComponent " + GetType().Name + " on " + name + ": Please provide a way to initialise data");
-                return null;
-            }
-        }
-
+        //Helper for DataInitialisation
         private GrandmaComponentData CreateFromSuppliedString()
         {
             if (string.IsNullOrEmpty(dataClassName))
@@ -117,14 +188,13 @@ namespace Grandma
             return CreateInitialData(n);
         }
 
+        //Helper for DataInitialisation
         private GrandmaComponentData CreateInitialData(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
                 return null;
             }
-
-            Debug.Log(name);
 
             var data = ScriptableObject.CreateInstance(name) as GrandmaComponentData;
 
@@ -139,8 +209,6 @@ namespace Grandma
             }
         }
         #endregion
-
-        protected virtual void Start() { }
 
         #region Read / Write
         /// <summary>
@@ -162,7 +230,7 @@ namespace Grandma
             OnUpdated?.Invoke(this);
         }
 
-        protected void Refresh()
+        public void Refresh()
         {
             Write();
 
