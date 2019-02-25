@@ -1,135 +1,132 @@
-﻿using System.Linq;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
-public class AStarPath
+namespace Grandma.Tiles
 {
-    public List<TileConnection> ValidPath { get; private set; }
-
-    public AStarPath(Grid grid, Tile startTile, Tile endTile, bool TileValuesAffectPath = true)
+    public class AStarPath
     {
-        List<Tile> closedSet = new List<Tile>();
+        public List<Tile> ValidPath { get; private set; }
 
-        PriorityQueue<float, Tile> openSet = new PriorityQueue<float, Tile>();
-        openSet.Enqueue(0, startTile);
-
-        Dictionary<Tile, Tile> path = new Dictionary<Tile, Tile>();
-
-        Dictionary<Tile, float> g_score = new Dictionary<Tile, float>();
-
-        foreach (Tile h in grid.AllTiles)
+        public AStarPath(List<Tile> allTiles, Tile startTile, Tile endTile, Func<Tile, Tile, float> heuristicCostEstimate = null)
         {
-            g_score[h] = Mathf.Infinity;
+            ValidPath = FindPath(allTiles, startTile, endTile, heuristicCostEstimate ?? DefaultEstimate);
         }
 
-        g_score[startTile] = 0;
-
-        Dictionary<Tile, float> f_score = new Dictionary<Tile, float>();
-
-        foreach (Tile h in grid.AllTiles)
+        private float DefaultEstimate(Tile a, Tile b)
         {
-            f_score[h] = Mathf.Infinity;
+            return Vector3Int.Distance(a.Position, b.Position);
         }
-
-        f_score[startTile] = heuristicCostEstimate(startTile, endTile);
-
-        while (!openSet.IsEmpty)
+        
+        private List<Tile> FindPath(List<Tile> allTiles, Tile startTile, Tile endTile, Func<Tile, Tile, float> heuristicCostEstimate)
         {
-            Tile current = openSet.Dequeue().Value;
-
-            if (current == endTile)
+            if(allTiles.Contains(startTile) == false || allTiles.Contains(endTile) == false)
             {
-                //path is complete
-                ValidPath = ReconstructPath(path, startTile, endTile);
-                return;
+                Debug.LogWarning("AStarPath: Attempting to find path but the start / end path are not part of the graph");
+                return null;
             }
 
-            closedSet.Add(current);
+            //Variable init
+            Dictionary<Tile, Tile> path = new Dictionary<Tile, Tile>();
 
+            List<Tile> closedSet = new List<Tile>();
 
-            foreach (TileConnection connection in current.Connections)
+            PriorityQueue<float, Tile> openSet = new PriorityQueue<float, Tile>();
+            openSet.Enqueue(0, startTile);
+
+            //G Score Init
+            Dictionary<Tile, float> g_score = new Dictionary<Tile, float>();
+
+            foreach (Tile h in allTiles)
             {
+                g_score[h] = Mathf.Infinity;
+            }
 
-                if (connection.MoveCost == Mathf.Infinity)
+            g_score[startTile] = 0;
+
+            //F score init
+            Dictionary<Tile, float> f_score = new Dictionary<Tile, float>();
+
+            foreach (Tile h in allTiles)
+            {
+                f_score[h] = Mathf.Infinity;
+            }
+
+            f_score[startTile] = heuristicCostEstimate(startTile, endTile);
+
+            //Search loop
+            while (!openSet.IsEmpty)
+            {
+                Tile current = openSet.Dequeue().Value;
+
+                //path is complete
+                if (current == endTile)
                 {
-                    continue;
+                    return ProcessPath(path, startTile, endTile);
                 }
 
-                Tile neighbour = connection.Destination;
+                closedSet.Add(current);
 
-                if (closedSet.Contains(neighbour))
+                foreach (var n in current.LinkedAssociations)
                 {
-                    continue;
-                }
+                    var nData = n.AssocData as NeighbourData;
+                    var nTile = n.Component as Tile;
 
-                float tentative_g_score = g_score[current] + connection.MoveCost;
-
-                if (openSet.Contains(neighbour))
-                {
-                    //a shorter path has been found before
-                    if (tentative_g_score >= g_score[neighbour])
+                    //If move cost is infinite, or tile is impassable
+                    if (nData == null || nData.moveCost == Mathf.Infinity || (nData.passable.IsUnlocked == false))
                     {
                         continue;
-                    } 
-                }
+                    }
 
-                path[connection.Destination] = current;
+                    if (nTile == null || closedSet.Contains(nTile))
+                    {
+                        continue;
+                    }
 
-                g_score[neighbour] = tentative_g_score;
-                f_score[neighbour] = g_score[neighbour] + heuristicCostEstimate(neighbour, endTile);
+                    float tentative_g_score = g_score[current] + nData.moveCost;
 
-                if (openSet.Contains(neighbour) == false)
-                {
-                    openSet.Enqueue(f_score[neighbour], neighbour);
+                    if (openSet.Contains(nTile))
+                    {
+                        //a shorter path has been found before
+                        if (tentative_g_score >= g_score[nTile])
+                        {
+                            continue;
+                        }
+                    }
+
+                    path[nTile] = current;
+
+                    g_score[nTile] = tentative_g_score;
+                    f_score[nTile] = g_score[nTile] + heuristicCostEstimate(nTile, endTile);
+
+                    if (openSet.Contains(nTile) == false)
+                    {
+                        openSet.Enqueue(f_score[nTile], nTile);
+                    }
                 }
             }
+
+            return null;
         }
-    }
 
-    float heuristicCostEstimate(Tile a, Tile b)
-    {
-        return Vector2.Distance(a.Position, b.Position);
-    }
-
-    List<TileConnection> ReconstructPath(Dictionary<Tile, Tile> path, Tile start, Tile end)
-    {
-
-        List<TileConnection> validPath = new List<TileConnection>();
-        Stack<Tile> pathStack = new Stack<Tile>();
-
-        Tile current = end;
-
-        pathStack.Push(end);
-
-        while (path.ContainsKey(current))
+        private List<Tile> ProcessPath(Dictionary<Tile, Tile> tiles, Tile start, Tile end)
         {
-            current = path[current];
-            pathStack.Push(current);
-        }        
-
-        current = pathStack.Pop();
-
-        while (pathStack.Count > 0)
-        {
-            Tile prev = pathStack.Pop();
-
-            Debug.Log(prev.Position);
-
-            TileConnection tc = current.Connections.Single((compData) =>
+            var path = new List<Tile>
             {
-                return compData.Destination == prev;
-            });
+                end
+            };
 
-            validPath.Add(tc);
+            Tile current = end;
 
-            current = prev;
+            while(tiles.ContainsKey(current))
+            {
+                path.Add(current);
+                current = tiles[current];
+            }
+
+            path.Reverse();
+
+            return path;
         }
-
-        
-
-        return validPath;
     }
-
 }
-*/

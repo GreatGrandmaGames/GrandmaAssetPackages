@@ -263,7 +263,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &1282342667
+--- !u!1 &1317682096
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -271,55 +271,55 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1282342670}
-  - component: {fileID: 1282342669}
-  - component: {fileID: 1282342668}
+  - component: {fileID: 1317682099}
+  - component: {fileID: 1317682098}
+  - component: {fileID: 1317682097}
   m_Layer: 0
-  m_Name: Tile
+  m_Name: HexBoi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1282342668
+--- !u!114 &1317682097
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1282342667}
+  m_GameObject: {fileID: 1317682096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46a5fd982ef5bf44bb0df6a13b432673, type: 3}
+  m_Script: {fileID: 11500000, guid: 474bc8666b3024449af14f1d076a7118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialDataMode: 0
-  initialData: {fileID: 0}
+  initialDataMode: 1
+  initialData: {fileID: 11400000, guid: aff110980c75b6c4aac6d29db85f5f6c, type: 2}
   dataClassName: 
   appendNameSpace: 1
   initialiseOnAwake: 1
   writeBeforeInitialRead: 0
---- !u!114 &1282342669
+--- !u!114 &1317682098
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1282342667}
+  m_GameObject: {fileID: 1317682096}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5457fee3cb244f648af9f3dd19af91c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1282342670
+--- !u!4 &1317682099
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1282342667}
+  m_GameObject: {fileID: 1317682096}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.217741, y: -2.9356909, z: -10.252141}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -368,4 +368,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9398afaab80e6e438450bd09a45df91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile2: {fileID: 1282342668}
+  map: {fileID: 1317682097}
+  tempTilePrfab: {fileID: 5745258062871202236, guid: 14a42e8ec15c76f45a076e59ef353c71,
+    type: 3}

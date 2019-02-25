@@ -9,8 +9,11 @@ namespace Grandma
     public class GrandmaAssociationData
     {
         public string OtherComponentID;
-        [SerializeField]
-        public LockDown lockDown = new LockDown();
+
+        public GrandmaAssociationData(string otherCompID)
+        {
+            this.OtherComponentID = otherCompID;
+        }
     }
 
     [Serializable]
@@ -19,8 +22,9 @@ namespace Grandma
         public bool singleObjectList = true;
 
         [SerializeField]
+        //[HideInInspector]
         public List<GrandmaAssociationData> AssociationData = new List<GrandmaAssociationData>();
-
+  
         public IEnumerable<string> LinkedComponentIDs
         {
             get
