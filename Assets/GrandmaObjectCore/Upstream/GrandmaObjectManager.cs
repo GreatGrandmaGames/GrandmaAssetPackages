@@ -114,14 +114,12 @@ namespace Grandma
         #endregion
 
         #region Object Creation
-        
-
-        public T CreateNewComponent<T>(GameObject obj = null) where T : GrandmaComponent
+        public static T CreateNewComponent<T>(GameObject obj = null) where T : GrandmaComponent
         {
             return CreateNewComponent(typeof(T), obj) as T;
         }
 
-        public GrandmaComponent CreateNewComponent(Type t, GameObject obj = null)
+        public static GrandmaComponent CreateNewComponent(Type t, GameObject obj = null)
         {
             if (t == null || t.IsSubclassOf(typeof(GrandmaComponent)) == false)
             {
@@ -131,8 +129,6 @@ namespace Grandma
             obj = obj ?? new GameObject("[Grandma]" + t.Name);
 
             GrandmaComponent comp = obj.AddComponent(t) as GrandmaComponent;
-
-            comp.Init();
 
             return comp;
         }

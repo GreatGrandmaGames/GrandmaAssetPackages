@@ -69,14 +69,10 @@ namespace Grandma
         #region Data Initialisation
         protected virtual void Awake()
         {
-            ObjectRegistration();
-
             //If spawned in the inspector and no other manager will call its initialisation functions
             if (initialiseOnAwake)
             {
-                DataInitialisation();
-
-                InitialiseNewComponent();
+                Init();
             }
         }
 
@@ -103,6 +99,7 @@ namespace Grandma
 
         public void Init()
         {
+            ObjectRegistration();
             DataInitialisation();
             InitialiseNewComponent();
         }
