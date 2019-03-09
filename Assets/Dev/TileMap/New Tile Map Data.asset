@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e482fb8c0000a4241bf18fc119af1eee, type: 3}
   m_Name: New Tile Map Data
   m_EditorClassIdentifier: 
-  componentID: a476fe10-0cbe-4173-8fd5-4a5007ae7627
+  componentID: 63a9b705-cf5b-4a06-baf1-b0f3dc325ed3
   associatedObjID: 
   dataClassName: Grandma.Tiles.TileMapData
   singleObjectList: 1
   AssociationData: []
   width: 10
   height: 10
+  tileSize: 1

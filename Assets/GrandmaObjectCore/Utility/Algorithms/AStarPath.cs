@@ -8,9 +8,9 @@ namespace Grandma.Tiles
     {
         public List<Tile> ValidPath { get; private set; }
 
-        public AStarPath(List<Tile> allTiles, Tile startTile, Tile endTile, Func<Tile, Tile, float> heuristicCostEstimate = null)
+        public AStarPath(TileMap tileMap, Tile startTile, Tile endTile)
         {
-            ValidPath = FindPath(allTiles, startTile, endTile, heuristicCostEstimate ?? DefaultEstimate);
+            ValidPath = FindPath(tileMap.AllTiles, startTile, endTile, tileMap.HeuristicNavigationEstimate);
         }
 
         private float DefaultEstimate(Tile a, Tile b)

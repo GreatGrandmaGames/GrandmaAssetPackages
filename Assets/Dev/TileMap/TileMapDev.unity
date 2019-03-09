@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 1317682098}
   - component: {fileID: 1317682097}
   m_Layer: 0
-  m_Name: HexBoi
+  m_Name: HexagonTileMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1317682096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bc8666b3024449af14f1d076a7118, type: 3}
+  m_Script: {fileID: 11500000, guid: be94350b5d5026c46b258ec6515c9cf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   initialDataMode: 1
@@ -299,6 +299,8 @@ MonoBehaviour:
   appendNameSpace: 1
   initialiseOnAwake: 1
   writeBeforeInitialRead: 0
+  tilePrefab: {fileID: 8178531917063809047, guid: dd07f03c76cccab409f126281e47c7d3,
+    type: 3}
 --- !u!114 &1317682098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,6 +337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1541301403}
   - component: {fileID: 1541301404}
+  - component: {fileID: 1541301405}
   m_Layer: 0
   m_Name: DevMgr
   m_TagString: Untagged
@@ -363,7 +366,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1541301402}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9398afaab80e6e438450bd09a45df91, type: 3}
   m_Name: 
@@ -371,3 +374,16 @@ MonoBehaviour:
   map: {fileID: 1317682097}
   tempTilePrfab: {fileID: 5745258062871202236, guid: 14a42e8ec15c76f45a076e59ef353c71,
     type: 3}
+--- !u!114 &1541301405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541301402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec35db5517b2fc4483bdcfb638ec09f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  example: {fileID: 2607785540914074881, guid: 4f15b264e97235e499417222e98fab11, type: 3}
