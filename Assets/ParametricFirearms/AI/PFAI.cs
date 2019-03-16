@@ -7,6 +7,8 @@ namespace Grandma.ParametricFirearms
     [RequireComponent(typeof(Moveable))]
     public class PFAI : Agent
     {
+        public Damageable startingTarget;
+
         [Header("PF References")]
         public Transform pfParent;
         public ParametricFirearm pfPrefab;
@@ -67,8 +69,6 @@ namespace Grandma.ParametricFirearms
             referenceBarrelTransform.transform.rotation = pf.barrelTip.transform.rotation;
         }
 
-
-
         protected override void Start()
         {
             base.Start();
@@ -101,6 +101,11 @@ namespace Grandma.ParametricFirearms
                 */
                 }
             };
+
+            if(startingTarget != null)
+            {
+                SetTarget(startingTarget);
+            }
         }
 
         public void SetTarget(Damageable d)

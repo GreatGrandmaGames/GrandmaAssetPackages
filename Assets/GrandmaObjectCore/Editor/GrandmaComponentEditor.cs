@@ -5,15 +5,15 @@ using UnityEngine;
 
 namespace Grandma
 {
+    [CanEditMultipleObjects]
     [CustomEditor(typeof(GrandmaComponent), true)]
     public class GrandmaComponentEditor : Editor
     {
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
-
             var comp = (GrandmaComponent)target;
 
+            EditorGUILayout.LabelField("Data Settings", EditorStyles.boldLabel);
             comp.initialDataMode = (GrandmaComponent.InitialDataMode)EditorGUILayout.EnumPopup("Initial Data Mode", comp.initialDataMode);
 
             switch (comp.initialDataMode)
@@ -26,6 +26,8 @@ namespace Grandma
                     comp.appendNameSpace = EditorGUILayout.Toggle("Append 'Grandma.' to name", comp.appendNameSpace);
                     break;
             }
+
+            base.OnInspectorGUI();
         }
     }
 }

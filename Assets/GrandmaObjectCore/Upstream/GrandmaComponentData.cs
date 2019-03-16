@@ -29,7 +29,7 @@ namespace Grandma
         {
             get
             {
-                return Type.GetType(dataClassName)?.IsSubclassOf(typeof(GrandmaComponentData)) == true;
+                return true;
             }
         }
 
