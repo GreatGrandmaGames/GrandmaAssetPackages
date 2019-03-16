@@ -28,7 +28,6 @@ namespace Grandma
         [Tooltip("Should the dataClassName include this class' namespace?")]
         public bool appendNameSpace = true;
 
-        [Header("Initial Data")]
         [Tooltip("Should this component run its data initialisation straight away? (If this is created in the inspector, then yes!)")]
         public bool initialiseOnAwake = false;
 
