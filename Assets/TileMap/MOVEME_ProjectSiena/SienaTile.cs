@@ -26,20 +26,12 @@ public class SienaTile : Tile
 
             if (tileTop != null)
             {
-                tileTop.transform.SetParent(Prism.transform);
+                tileTop.transform.SetParent(sRenderer.transform);
                 tileTop.transform.localPosition = Vector3.zero;
                 tileTop.transform.localRotation = Quaternion.identity;
 
                 tileTop.Render();
             }
         }
-    }
-
-    public override void OnLinkedToTileMap(TileMap map)
-    {
-        base.OnLinkedToTileMap(map);
-
-        //TODO: get biome
-        Biome = FindObjectOfType<Biome>();
     }
 }

@@ -10,6 +10,7 @@ namespace Grandma.Tiles
 
         public AStarPath(TileMap tileMap, Tile startTile, Tile endTile)
         {
+            Debug.Log(tileMap + " " + startTile + " " + endTile);
             ValidPath = FindPath(tileMap.AllTiles, startTile, endTile, tileMap.HeuristicNavigationEstimate);
         }
 

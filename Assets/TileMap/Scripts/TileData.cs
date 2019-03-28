@@ -5,7 +5,8 @@ namespace Grandma.Tiles
 {
     public class TileData : GrandmaCollectionData
     {
-        public Vector3Int postion;
+        public int tileID;
+        public Vector3Int position;
     }
 
     [Serializable]

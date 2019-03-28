@@ -28,7 +28,7 @@ namespace Grandma
         #endregion
 
         #region Registration
-        public GrandmaObjectData Register(GrandmaObject gObj)
+        public GrandmaObjectData RegisterObject(GrandmaObject gObj)
         {
             if (gObj == null)
             {

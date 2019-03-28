@@ -38,7 +38,23 @@ namespace Grandma
         private bool performedInitialisation = false;
 
         //Private Variables
-        public virtual GrandmaComponentData Data { get; protected set; }
+        private GrandmaComponentData data;
+        public virtual GrandmaComponentData Data
+        {
+            get
+            {
+                return data;
+            }
+            protected set
+            {
+                if(value == null)
+                {
+                    Debug.LogError("GrandmaComponent: Attempting to set Data to null. This is not allowed!");
+                }
+
+                data = value;
+            }
+        }
 
         //Events
         /// <summary>
@@ -80,9 +96,8 @@ namespace Grandma
         /// <summary>
         /// Registers this component with the GrandmaObject and, if necessary, the Manager. Always happens on Awake
         /// </summary>
-        private void ObjectRegistration()
+        private void ManagerRegistration()
         {
-            //Registration
             Base = GetComponent<GrandmaObject>();
 
             if (Base == null)
@@ -98,7 +113,7 @@ namespace Grandma
 
         public void Init()
         {
-            ObjectRegistration();
+            ManagerRegistration();
             DataInitialisation();
             InitialiseNewComponent();
         }

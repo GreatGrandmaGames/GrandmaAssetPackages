@@ -2,19 +2,34 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using Grandma.Geometry;
 
 namespace Grandma.Tiles
 {
     public abstract class TileMap : GrandmaCollection
     {
         //Inspector
-        public Tile tilePrefab;
+        [SerializeField] protected TileMapGenerator generator;
 
         //Private variables
-        private Dictionary<Vector3Int, Tile> tilesForPosition = new Dictionary<Vector3Int, Tile>();
+        private Dictionary<Vector3Int, Tile> tilesForPosition = new Dictionary<Vector3Int, Tile>(new TilePositionComparator());
         [NonSerialized]
         protected TileMapData tileMapData;
+
+        public int Width
+        {
+            get
+            {
+                return tileMapData.width;
+            }
+        }
+
+        public int Height
+        {
+            get
+            {
+                return tileMapData.height;
+            }
+        }
 
         //Properties
         public override GrandmaComponentData Data
@@ -53,7 +68,10 @@ namespace Grandma.Tiles
             {
                 tilesForPosition[t.Position] = t;
 
-                t.OnLinkedToTileMap(this);
+                t.transform.position = PositionToWorld(t.Position);
+                t.TileMap = this;
+
+                t.Refresh();
             }
         }
 
@@ -72,9 +90,12 @@ namespace Grandma.Tiles
 
         public Tile TileAt(Vector3Int position)
         {
-            Debug.Log(position);
+            return tilesForPosition.ContainsKey(position) ? tilesForPosition[position]: null;
+        }
 
-            return tilesForPosition.ContainsKey(position) ? tilesForPosition[position] : null;
+        public void ForEachWidthHeight(Action<int, int> action)
+        {
+            IterationUtility.ForEach2D(tileMapData.width, tileMapData.height, action);
         }
 
         //TODO: allow for HCE
@@ -88,14 +109,17 @@ namespace Grandma.Tiles
         {
             base.OnCreated();
 
+            generator.Init(tileMapData.width, tileMapData.height);
+
             //Create tiles
-            for (int x = -(tileMapData.width / 2); x < (tileMapData.width / 2); x++)
+            List<GrandmaAssociationData> tileData = new List<GrandmaAssociationData>();
+
+            ForEachWidthHeight((i, j) =>
             {
-                for (int y = -(tileMapData.height / 2); y < (tileMapData.height / 2); y++)
-                {
-                    AddToData(new GrandmaAssociationData(CreateTile(x, y).ComponentID));
-                }
-            }
+                tileData.Add(new GrandmaAssociationData(generator.TileFor(i, j).ComponentID));
+            });
+
+            Add(tileData);
 
             Refresh();
 
@@ -116,24 +140,6 @@ namespace Grandma.Tiles
 
                 t.Add(nData);
             }
-        }
-
-        private Tile CreateTile(int x, int y)
-        {
-            Tile t = Instantiate(tilePrefab);
-
-            //Back end
-            //Set tile data - we want to provide initial data with some position
-            t.initialDataMode = InitialDataMode.Provide;
-            TileData tileData = ScriptableObject.CreateInstance(typeof(TileData)) as TileData;
-            //Cube co-ordinate
-            tileData.postion = CoordinatesFor(x, y);
-
-            t.initialData = tileData;
-
-            t.Init();
-
-            return t;
         }
         #endregion
 

@@ -3,25 +3,26 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Grandma.Geometry;
-
 namespace Grandma.Tiles
 {
     public class Tile : GrandmaCollection
     {
         //Inspector variables
-        public Prism Prism;
+        [SerializeField] protected SpriteRenderer sRenderer;
 
         //Private variable
         [NonSerialized]
-        protected TileData tileData;
+        private TileData tileData;
 
         //Properties
+        public TileMap TileMap { get; set; }
+
         public override GrandmaComponentData Data {
 
             get => base.Data;
 
-            protected set {
+            protected set
+            {
                 base.Data = value;
 
                 tileData = Data as TileData;
@@ -32,7 +33,7 @@ namespace Grandma.Tiles
         {
             get
             {
-                return tileData.postion;
+                return tileData.position;
             }
         }
 
@@ -44,21 +45,19 @@ namespace Grandma.Tiles
             }
         }
 
+        public int TileID
+        {
+            get
+            {
+                return tileData.tileID;
+            }
+        }
+
         #region Collection (Neighbour) Overrides
         public override bool CanAssociate(GrandmaComponent comp)
         {
             return base.CanAssociate(comp) && comp as Tile != null;
         }
         #endregion
-
-        public virtual void OnLinkedToTileMap(TileMap map)
-        {
-            transform.position = map.PositionToWorld(Position);
-
-            //Set the radius of the tile to the size specified by the map
-            Prism.radius = (map.Data as TileMapData)?.tileSize ?? 0f;
-
-            Prism.Render();
-        }
     }
 }

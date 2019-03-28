@@ -44,7 +44,7 @@ namespace Grandma
                 //GrandmaObjectManager will set instance on Awake
             }
 
-            Data = GrandmaObjectManager.Instance.Register(this);
+            Data = GrandmaObjectManager.Instance.RegisterObject(this);
         }
 
         private bool isQutting = false;
