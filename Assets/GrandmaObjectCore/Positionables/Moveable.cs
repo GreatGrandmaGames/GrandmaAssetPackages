@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Grandma
 { 
-    public class Moveable : Positionable
+    public class Moveable : MonoBehaviour
     {
         public KeyCode switchCode;
         //MoveControllers can be set via inspector. Do not initialise a new list here
@@ -30,10 +30,8 @@ namespace Grandma
         public MoveController ActiveController { get; private set; }
         public LockDown ChangeMovementLock { get; private set; } = new LockDown();
 
-        protected override void Awake()
-        {
-            base.Awake();
-            
+        private void Awake()
+        { 
             SwitchMode(StartingController);
         }
 
